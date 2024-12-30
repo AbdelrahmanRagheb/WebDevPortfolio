@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Product</title>
+  <link rel="stylesheet" th:href="@{/css/add-product-page-style.css}" type="text/css">
+  <meta name="_csrf" th:content="${_csrf.token}"/>
+  <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+<body>
+
+<div class="container">
+  <div class="main-content">
+    <h2>Add a New Product</h2>
+    <form th:action="@{/add-product}" method="post" class="product-form" enctype="multipart/form-data">
+      <label for="product-title">Product Title</label>
+      <input type="text" id="product-title" name="title" required>
+
+      <label for="product-description">Description</label>
+      <textarea id="product-description" name="description" required></textarea>
+
+      <label for="product-price">Price (EGP)</label>
+      <input type="number" id="product-price" name="price" required>
+
+      <label for="product-brand">Brand</label>
+      <input type="text" id="product-brand" name="brand" required>
+
+      <label for="product-category">Category</label>
+      <select id="product-category" name="category" required>
+        <option th:each="category : ${categories}" th:value="${category}" th:text="${category}"></option>
+      </select>
+
+      <label for="product-image">Product Image</label>
+      <input type="file" id="product-image" name="image" accept="image/*">
+
+      <button type="submit">Add Product</button>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>

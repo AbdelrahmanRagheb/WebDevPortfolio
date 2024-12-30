@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign up</title>
+    <link rel="stylesheet" th:href="@{/css/signup-form-style.css}">
+</head>
+<body>
+
+
+<div class="signup-wrapper">
+    <div class="signup-image">
+        <img src="/images/logo.png" alt="Welcome to ShopEase">
+    </div>
+
+    <div class="main-content">
+        <div class="container">
+            <form method="POST" th:action="@{/createNewUser}" th:object="${user}">
+                <h2>Personal Details</h2>
+                <div class="form-row">
+                    <label for="fullName">Full Name</label>
+                    <div class="value">
+                        <input type="text" id="fullName" name="fullName" th:field="*{fullName}">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <label for="username">Username</label>
+                    <div class="value">
+                        <input type="text" id="username" name="username" th:field="*{username}">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <label for="password">Email</label>
+                    <div class="value">
+                        <input type="password" id="password" name="password" th:field="*{password}">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <label for="email">Email</label>
+                    <div class="value">
+                        <input type="email" id="email" name="email" th:field="*{email}">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <label for="phoneNumber">Phone number</label>
+                    <div class="value">
+                        <input type="text" id="phoneNumber" name="phoneNumber" value="+420 777 888 999">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <label for="mainRole">Main role</label>
+                    <div class="value">
+                        <input type="text" id="mainRole" name="mainRole" th:field="*{accountType}">
+                    </div>
+                </div>
+
+
+                <input class="signup-btn" type="submit" name="_csrf" value="Sign up"/>
+
+            </form>
+
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Shopping Page</title>
+    <link rel="stylesheet" th:href="@{/css/search-page-style.css}" type="text/css">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/product-brand-filter.js"></script>
+    <script src="/js/like-wishlist-handler.js"></script>
+
+</head>
+<body>
+<header>
+    <div class="logo">
+        <h1>ShopEase Store</h1>
+    </div>
+    <nav>
+        <ul>
+            <li><a th:href="@{/}">Home</a></li>
+            <li th:if="${isAuthenticated}">
+                <a th:href="@{/add-product}" methods="GET">Add Product</a></li>
+        </ul>
+    </nav>
+    <div class="search-bar">
+        <form th:action="@{/search}" method="get">
+            <input type="text" name="keyword" th:value="${keyword}!=null?${keyword}:''" placeholder="Search for products...">
+            <button type="submit">Search</button>
+        </form>
+
+    </div>
+    <nav>
+        <ul>
+            <li th:if="${!isAuthenticated}"><a th:href="@{/login}">Login</a></li>
+
+            <li th:if="${isAuthenticated}"><a th:href="@{/dashboard}">Dashboard</a></li>
+
+        </ul>
+    </nav>
+
+
+</header>
+<div class="container">
+    <div class="sidebar">
+        <div class="filters">
+            <h3>Brands</h3>
+            <label>
+                <input type="radio" name="brand" value="All" checked>
+                <span th:text="'ALL' + ' (' + ${brands.get(0).getValue()} + ')'"></span>
+            </label>
+            <label th:each="brand : ${brands}" th:if="${brand.key} != 'ALL'">
+                <input type="radio" name="brand" th:value="${brand.key}" th:checked="${brand.key == selectedBrand}"/>
+                <span th:text="${brand.key + ' (' + brand.value + ')'}"></span>
+            </label>
+
+
+        </div>
+
+        <div class="filters">
+            <h3>Customer Reviews</h3>
+
+            <label>
+                <input type="radio" name="review" value="0.0" checked >
+                <span th:text="'ALL' + ' (' + ${ratings.get(0).getValue()} + ')'"></span>
+            </label>
+
+            <label>
+                <input type="radio" name="review" value="4.0" th:checked="${ratings.get(4).key == selectedRating}"/>
+                <span class="stars">&#9733;&#9733;&#9733;&#9733;</span><span
+                    th:text="' & up ('+${ratings.get(4).value}+')'"></span>
+            </label>
+            <label>
+                <input type="radio" name="review" value="3.0" th:checked="${ratings.get(3).key == selectedRating}">
+                <span class="stars">&#9733;&#9733;&#9733;</span><span
+                    th:text="' & up ('+${ratings.get(3).value}+')'"></span>
+
+            </label>
+            <label>
+                <input type="radio" name="review" value="2.0" th:checked="${ratings.get(2).key == selectedRating}">
+                <span class="stars">&#9733;&#9733;</span><span th:text="' & up ('+${ratings.get(2).value}+')'"></span>
+
+            </label>
+            <label>
+                <input type="radio" name="review" value="1.0" th:checked="${ratings.get(1).key == selectedRating}">
+                <span class="stars">&#9733;</span><span th:text="' & up ('+${ratings.get(1).value}+')'"></span>
+
+            </label>
+        </div>
+
+
+    </div>
+    <div class="main-content">
+        <div class="product-grid">
+            <div th:each="product : ${products}" class="product">
+                <a class="product-link" th:href="@{/product/{id}(id=${product.product.id})}">
+                    <div>
+                        <div class="image-container">
+                            <img src="https://via.placeholder.com/300?text=Product+1" alt="Sample Image">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-title" th:text="${product.product.title}"></div>
+                            <div class="product-desc" th:text="${product.product.desc}"></div>
+                            <div class="price-container">
+                                <p th:text="${product.product.price} +'$'" class="price-text"></p>
+                                <input type="hidden" th:value="${product.product.id}" class="product-id" id="product-id">
+                                <input type="hidden" class="product-brand" name="product-brand"
+                                       th:value="${product.brand}"/>
+                                <input type="hidden" class="product-rating" id="product-rating"
+                                       th:value="${product.rating}"/>
+
+                                <div th:if="${isAuthenticated}">
+                                    <a>
+                                        <img class="wishlist-icon"
+                                             th:src="${product.isWishListed()}?@{/images/loaded-cart.png}:@{/images/empty-cart.png}"
+                                             alt="add to wishlist"
+                                             data-product-id="${product.product.id}">
+                                    </a>
+                                    <a>
+                                        <img class="like-icon"
+                                             th:src="${product.isLiked()} ? @{/images/full_heart.png} : @{/images/empty_heart.png}"
+                                             alt="like" data-product-id="${product.product.id}">
+                                    </a>
+
+                                </div>
+                            </div>
+
+                            <div class="star-rating" >
+                                <!-- Stars will be dynamically rendered -->
+                            </div>
+
+
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

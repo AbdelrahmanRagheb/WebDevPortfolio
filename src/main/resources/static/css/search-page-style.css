@@ -1,0 +1,330 @@
+body {
+    font-family: 'Arial', sans-serif;
+
+    overflow-y: auto;
+    background-color: #fff;
+
+}
+
+/* Header Styles */
+header {
+    background-color: #333;
+    color: white;
+    padding: 15px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid #0073e6;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+header .logo {
+    margin-left: 20px;
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    margin-right: 20px;
+}
+
+header nav ul li {
+    margin: 0 10px;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+    transition: background-color 0.3s;
+}
+
+header nav ul li a:hover {
+    background-color: #0073e6;
+    border-radius: 5px;
+}
+
+header .search-bar {
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+}
+
+header .search-bar input {
+    padding: 10px;
+    margin-right: 5px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    width: 300px;
+}
+
+header .search-bar button {
+    padding: 10px;
+    background-color: #0073e6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+header .search-bar button:hover {
+    background-color: #005bb5;
+}
+
+.container {
+    display: flex;
+    height: 100vh; /* Full viewport height */
+
+
+
+
+    /* Hide overflow to manage scrolling manually */
+}
+
+.sidebar {
+    width: 15%;
+
+    padding: 5px;
+    margin-right: 20px;
+
+    scrollbar-width: none; /* Firefox */
+}
+
+.sidebar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, and Opera */
+}
+
+.filters h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #333;
+}
+
+.filters label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #555;
+}
+
+.filters input {
+    margin-right: 10px;
+}
+
+.main-content {
+    width: 85%;
+    padding: 15px;
+
+
+    height: calc(100vh - 40px); /* Full height - margins */
+}
+
+.product-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+
+    padding-bottom: 50px; /* Space between the products */
+}
+
+.product img {
+    max-width: 100%;
+    height: auto;
+}
+
+.product div {
+    font-size: 14px;
+}
+
+.product {
+
+    text-align: left;
+    width: 18%;
+    text-decoration: none;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    margin: 0; /* Ensure no margin */
+}
+
+.product-link {
+    text-decoration: none;
+}
+
+.product:hover {
+    transform: translateY(-5px);
+}
+
+.product-info {
+    text-align: left;
+    margin: 0; /* Ensure no margin */
+    padding: 0; /* Ensure no padding */
+}
+
+.productId {
+    text-decoration: none;
+    visibility: hidden;
+    display: block;
+    width: 0px;
+    height: 0px;
+    opacity: 0;
+    position: absolute;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.product-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 2px;
+    color: #333;
+    text-decoration: none;
+}
+
+.product-desc {
+    font-size: 16px;
+    text-decoration: none;
+    margin-top: 2px;
+    color: #333;
+}
+
+.price-container {
+    margin-top: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Ensure the items do not overflow horizontally */
+}
+
+.price-text {
+    font-size: 18px;
+    font-weight: bold;
+    color: #008a00;
+}
+
+.like-icon, .wishlist-icon {
+    width: 24px;
+    height: auto;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.image-container {
+    background-color: #f0f0f0;
+    padding: 20px;
+    display: inline-block;
+}
+
+.image-container img {
+    display: block;
+    max-width: 100%;
+}
+
+.like-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.like-form {
+    display: inline-block;
+}
+
+.filters {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+.filters h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.filters label {
+    display: block;
+    margin-bottom: 8px;
+    cursor: pointer;
+    color: #333;
+}
+
+.filters input[type="radio"] {
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+.filters .stars {
+    color: gold;
+    font-size: 16px;
+}
+
+.filters span {
+    vertical-align: middle;
+}
+
+.star {
+    font-size: 24px;
+    color: #ccc;
+}
+
+.full-star {
+    color: #f4c542;
+}
+
+.partial-star-¼ {
+    background: linear-gradient(to right, #f4c542 25%, #ccc 25%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.partial-star-½ {
+    background: linear-gradient(to right, #f4c542 50%, #ccc 50%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.partial-star-¾ {
+    background: linear-gradient(to right, #f4c542 75%, #ccc 75%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.empty-star {
+    color: #ccc;
+}
+
+.star-rating {
+    margin-top: 0; /* Ensure no margin above */
+    padding: 0; /* Remove any padding */
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    margin-bottom: 0; /* Ensure no bottom margin */
+}
+
+.star-rating span {
+    font-size: 18px; /* Adjust star size */
+}
+
+.star-rating .rating-value {
+    font-size: 14px; /* Slightly smaller size for the rating text */
+    color: #555; /* Neutral color for the text */
+    margin-left: 5px; /* Space between stars and rating value */
+}
+
+.container::-webkit-scrollbar {
+    width: 8px; /* Width of the scrollbar */
+}
+
+.container::-webkit-scrollbar-thumb {
+    background-color: #888; /* Color of the scrollbar thumb */
+    border-radius: 10px;
+}
+
+.container::-webkit-scrollbar-track {
+    background-color: #f1f1f1; /* Color of the track */
+}

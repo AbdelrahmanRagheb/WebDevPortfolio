@@ -1,0 +1,618 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
+    background-color: #f4f4f4;
+    gap: 20px; /* Add spacing between the two panels */
+}
+
+/* Sidebar Styles */
+
+.sidebar {
+    min-width: 150px; /* Sidebar width */
+    background-color: #2c3e50; /* Darker, modern background */
+    color: #333; /* Darker text for contrast */
+    padding: 20px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Align the items to the top */
+    align-items: center; /* Centers buttons horizontally */
+    height: auto; /* Sidebar height adjusts based on content */
+    gap: 20px; /* Space between buttons */
+    transition: all 0.3s ease-in-out;
+}
+
+/* Sidebar Link Styles */
+.sidebar a {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: white; /* Dark text color */
+    text-decoration: none;
+    font-size: 18px;
+    width: 90%;
+    border-radius: 10px;
+    transition: background-color 0.3s, transform 0.2s ease;
+    cursor: pointer;
+    justify-content: center; /* Align text and icon in center */
+    text-align: center;
+}
+
+/* Hover Effect for Sidebar Links */
+.sidebar a:hover {
+    background-color: #0077cc; /* Slightly darker on hover */
+    color: white; /* Text color changes on hover */
+    transform: scale(1.05); /* Slight increase in size for effect */
+}
+
+/* Active Link Style */
+.sidebar a.active {
+    background-color: #005bb5; /* Darker blue for active state */
+    color: white;
+    font-weight: bold;
+    transform: scale(1.05);
+}
+
+/* Sidebar Icons */
+.sidebar a i {
+    margin-right: 12px; /* Spacing between icon and text */
+    font-size: 22px; /* Icon size */
+}
+
+/* Optional: Adjust sidebar width and position on small screens */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 180px; /* Slightly smaller on mobile */
+        padding: 15px;
+    }
+}
+
+
+.main-content {
+    max-width: 80%;
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    height: calc(100vh - 40px); /* Subtracts padding/margin from height */
+    overflow-y: auto; /* Makes the content scrollable */
+}
+
+.container {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    overflow-y: auto;
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+}
+
+/* For Webkit-based browsers (Chrome, Safari) */
+.container::-webkit-scrollbar {
+    display: none;
+}
+
+.container h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.form-row label {
+    width: 150px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-row .value {
+    flex-grow: 1;
+}
+
+.form-row .value input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    color: #555;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    outline: none;
+    pointer-events: none; /* Make it look inactive */
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.buttons button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.buttons .update {
+    background-color: #1E90FF;
+    color: #fff;
+}
+
+.buttons .change-password {
+    background-color: #FF4500;
+    color: #fff;
+}
+
+.buttons button:hover {
+    opacity: 0.9;
+}
+
+
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+}
+
+/* Header Styles */
+header {
+    background-color: #333;
+    color: white;
+    padding: 15px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid #0073e6;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+header .logo {
+    margin-left: 20px;
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    margin-right: 20px;
+}
+
+header nav ul li {
+    margin: 0 10px;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+    transition: background-color 0.3s;
+}
+
+header nav ul li a:hover {
+    background-color: #0073e6;
+    border-radius: 5px;
+}
+
+header .search-bar {
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+}
+
+header .search-bar input {
+    padding: 10px;
+    margin-right: 5px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    width: 300px;
+}
+
+header .search-bar button {
+    padding: 10px;
+    background-color: #0073e6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+header .search-bar button:hover {
+    background-color: #005bb5;
+}
+
+/* Main Content Styles */
+main {
+    padding: 20px;
+}
+
+.top-rated-products {
+    padding: 20px;
+    background-color: white;
+}
+
+.top-rated-products h2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.top-rated-products .see-all {
+    font-size: 16px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.top-rated-products .see-all:hover {
+    text-decoration: underline;
+}
+
+.hero {
+    text-align: center;
+    padding: 40px 0;
+    background-color: #e2e2e2;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+section h2 {
+    margin-bottom: 10px;
+    color: #0073e6;
+}
+
+/* Card Container Styles */
+
+.cards,
+.scrolling-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 10px;
+    justify-content: flex-start;
+    /* Distribute space evenly */
+}
+
+.card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 8px;
+    width: 135px;
+
+    height: 320px;
+    text-align: center;
+    width: calc(15% - 10px);
+
+    margin: 5px;
+
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.product {
+    background-color: #fff;
+    text-align: left;
+    width: 18%;
+    text-decoration: none;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.card img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 3px;
+    border-radius: 10px;
+}
+
+.card h3 {
+    font-size: 1.2em;
+    text-align: center;
+    margin: 1px 0;
+    max-height: 3em;
+    /* Set a max height for the description */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* Add ellipsis for overflow text */
+    white-space: nowrap;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    /* Limit to 2 lines */
+    -webkit-box-orient: vertical;
+}
+
+.card .description {
+    font-size: 0.9em;
+    color: #777;
+    margin-bottom: 0;
+    margin-top: 0;
+    max-height: 3em;
+    /* Set a max height for the description */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* Add ellipsis for overflow text */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    /* Limit to 2 lines */
+    -webkit-box-orient: vertical;
+}
+
+.card .price {
+    color: #0073e6;
+    font-size: 1em;
+    text-align: center;
+    margin: 1px 0;
+}
+
+.card .add-to-cart {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    width: 80%;
+    border-radius: 15px;
+    margin-right: 10px;
+    margin-left: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.card .add-to-cart:hover {
+    background-color: #45a049;
+}
+
+
+/* Footer Styling */
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px 0;
+    gap: 20px;
+}
+
+.footer-section {
+    max-width: 200px;
+    text-align: left;
+}
+
+.footer-section img {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+footer p {
+    margin: 10px 0 0;
+}
+
+.product-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+}
+
+
+.product img {
+    max-width: 100%;
+    height: auto;
+
+}
+
+
+.product div {
+    font-size: 14px;
+}
+
+.product {
+    background-color: #fff;
+    text-align: left;
+    width: 18%;
+    text-decoration: none;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+
+}
+
+.product-link {
+    text-decoration: none;
+}
+
+.product:hover {
+    transform: translateY(-5px);
+
+}
+
+.product-info {
+    text-align: left;
+}
+
+.productId {
+    text-decoration: none;
+    visibility: hidden;
+
+    display: block; /* Make it block level to allow setting dimensions */
+    width: 0px; /* Set the desired width */
+    height: 0px; /* Set the desired height */
+    opacity: 0; /* Make it invisible */
+    position: absolute; /* Remove it from the normal document flow */
+    z-index: 1; /* Ensure it is above other elements */
+    cursor: pointer;
+}
+
+.product-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 2px;
+    color: #333;
+    text-decoration: none;
+}
+
+.product-desc {
+    font-size: 16px;
+    text-decoration: none;
+    margin-top: 2px;
+    color: #333;
+}
+
+.price {
+    font-size: 18px;
+    font-weight: bold;
+    color: #008a00;
+    text-decoration: none;
+    margin-top: 2px;
+}
+
+.image-container {
+    background-color: #f0f0f0; /* Set your desired background color here */
+    padding: 20px; /* Optional: Add padding around the image */
+    display: inline-block;
+    /* Ensures the container only takes up as much space as needed */
+}
+
+.image-container img {
+    display: block; /* Remove default inline spacing */
+    max-width: 100%; /* Ensure the image is responsive */
+}
+
+.price-container {
+    margin-top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.price-text {
+    font-size: 18px;
+    font-weight: bold;
+    color: #008a00;
+}
+
+.like-icon, .wishlist-icon {
+    width: 24px; /* Adjust size as needed */
+    height: auto;
+    margin-right: 10px;
+    cursor: pointer; /* Optional: change cursor to pointer on hover */
+}
+
+
+/*body{*/
+/*    font-family: Arial, sans-serif;*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*    background-color: #f8f9fa;*/
+/*    color: #333;*/
+/*}*/
+.orders-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    font-family: 'Arial', sans-serif;
+}
+
+h2 {
+    text-align: center;
+    color: #007bff;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+p {
+    text-align: center;
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.95rem;
+    background-color: #ffffff;
+}
+
+.order-table th, .order-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+}
+
+.order-table th {
+    background-color: #007bff;
+    color: #ffffff;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.order-table td {
+    color: #555;
+}
+
+.order-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.order-table tr:hover {
+    background-color: #e9f7fe;
+}
+
+.order-table th:first-child, .order-table td:first-child {
+    text-align: center;
+    font-weight: bold;
+    color: #333;
+}
+
+.order-table th:last-child, .order-table td:last-child {
+    text-align: right;
+}
+
+.order-table td:last-child {
+    font-weight: bold;
+    color: #007bff;
+}
+
+.orders-container .order-table tbody tr:hover td {
+    color: #333;
+    font-weight: bold;
+}

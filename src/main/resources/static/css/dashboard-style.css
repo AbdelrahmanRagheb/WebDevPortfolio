@@ -1,0 +1,111 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
+    background-color: #f4f4f4;
+    gap: 20px; /* Add spacing between the two panels */
+}
+.sidebar {
+    width: 250px;
+    background-color:#005bb5;
+    color: white;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+.sidebar a {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+.sidebar a i {
+    margin-right: 10px;
+}
+.sidebar a:hover {
+    background-color:#005bb5;
+}
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+
+}
+
+
+.container {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+
+    width: 600px;
+}
+.container h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.form-row label {
+    width: 150px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+.form-row .value {
+    flex-grow: 1;
+}
+.form-row .value input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    color: #555;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    outline: none;
+    pointer-events: none;/* Make it look inactive */
+}
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+.buttons button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+.buttons .update {
+    background-color: #1E90FF;
+    color: #fff;
+}
+.buttons .change-password {
+    background-color: #FF4500;
+    color: #fff;
+}
+.buttons button:hover {
+    opacity: 0.9;
+}

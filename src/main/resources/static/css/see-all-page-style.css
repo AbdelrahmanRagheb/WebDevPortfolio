@@ -1,0 +1,177 @@
+body {
+    font-family: 'Arial', sans-serif;
+
+    background-color: #f4f4f4;
+    overflow: hidden;
+    /* Prevent body scrolling */
+}
+
+
+.container {
+    display: flex;
+
+
+    height: 100vh;
+    /* Full viewport height */
+    overflow: hidden;
+    /* Hide overflow to manage scrolling manually */
+}
+
+.sidebar {
+    width: 15%;
+    background-color: #fff;
+    padding: 5px;
+
+
+    margin-right: 20px;
+    overflow-y: scroll;
+
+    /* Full height - margins */
+    scrollbar-width: none;
+    /* Firefox */
+}
+
+.sidebar::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari, and Opera */
+}
+
+.filters h3 {
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #333;
+}
+
+.filters label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #555;
+}
+
+.filters input {
+    margin-right: 10px;
+}
+
+.main-content {
+    width: 85%;
+    padding: 15px;
+    background-color: #fff;
+
+
+    overflow-y: auto;
+    /* Make main content scrollable */
+    height: calc(100vh - 40px);
+    /* Full height - margins */
+}
+
+.product-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+}
+
+
+.product img {
+    max-width: 100%;
+    height: auto;
+
+}
+
+
+.product div {
+    font-size: 14px;
+}
+
+.product {
+    background-color: #fff;
+    text-align: left;
+    width: 18%;
+    text-decoration: none;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+
+}
+.product-link{
+    text-decoration: none;
+}
+
+.product:hover {
+    transform: translateY(-5px);
+
+}
+
+.product-info {
+    text-align: left;
+}
+.productId{
+    text-decoration: none;
+    visibility: hidden;
+
+    display: block; /* Make it block level to allow setting dimensions */
+    width: 0px; /* Set the desired width */
+    height: 0px; /* Set the desired height */
+    opacity: 0; /* Make it invisible */
+    position: absolute; /* Remove it from the normal document flow */
+    z-index: 1; /* Ensure it is above other elements */
+    cursor: pointer;
+}
+
+.product-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 2px;
+    color: #333;
+    text-decoration: none;
+}
+
+.product-desc {
+    font-size: 16px;
+    text-decoration: none;
+    margin-top: 2px;
+    color: #333;
+}
+
+.price-container {
+    margin-top: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.price-text {
+    font-size: 18px;
+    font-weight: bold;
+    color: #008a00;
+}
+
+.like-icon,.wishlist-icon {
+    width: 24px; /* Adjust size as needed */
+    height: auto;
+    margin-right: 10px;
+    cursor: pointer; /* Optional: change cursor to pointer on hover */
+}
+
+
+.image-container {
+    background-color: #f0f0f0; /* Set your desired background color here */
+    padding: 20px; /* Optional: Add padding around the image */
+    display: inline-block;
+    /* Ensures the container only takes up as much space as needed */
+}
+
+.image-container img {
+    display: block; /* Remove default inline spacing */
+    max-width: 100%; /* Ensure the image is responsive */
+}
+.like-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.like-form {
+    display: inline-block;
+}
