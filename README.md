@@ -33,3 +33,21 @@ Follow these steps to set up ShopEase locally:
 git clone https://github.com/your-username/ShopEase.git
 cd ShopEase
 
+### Set Up the Database
+
+1. Create a new database in your SQL server (MySQL/PostgreSQL).
+2. Update the `application.properties` file with your database credentials:
+```bash
+spring.datasource.url=jdbc:mysql://localhost:3306/shopEaseDB
+spring.datasource.username=root
+spring.datasource.password=your-password
+
+### Install Dependencies
+Make sure you have Maven installed on your machine. Run the following command to install the necessary dependencies:
+```bash
+mvn install
+### Run the Application
+To run the application, use the following command:
+```bash
+mvn spring-boot:run
+The application will be accessible at `http://localhost:8080`.
