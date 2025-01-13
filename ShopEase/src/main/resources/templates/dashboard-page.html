@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/dashboard-page-style.css}" type="text/css">
+    <title>dashboard</title>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:src="@{/js/dashboard-handler.js}" type="text/javascript"></script>
+</head>
+<body>
+<div class="sidebar">
+    <a id="profile-btn"> My Profile</a>
+    <a id="wishlist-btn"> My Wishlist</a>
+    <a id="orders-btn"> My Orders</a>
+    <a id="logout-btn"> Log Out</a>
+
+</div>
+<div class="main-content">
+
+    <!--profile-page section-->
+    <div id="profile-container" class="container" style="display:block;">
+        <h2>Personal Details</h2>
+        <form th:action="@{/updateUserInfo}" method="post" th:object="${userInfo}">
+
+            <div class="form-row">
+                <label for="fullName">Full Name</label>
+                <div class="value">
+                    <input type="text" id="fullName" name="fullName" th:field="${userInfo.fullName}">
+                </div>
+            </div>
+            <div class="form-row">
+                <label for="username">Username</label>
+                <div class="value">
+                    <input type="text" id="username" name="username" th:field="${userInfo.username}">
+                </div>
+            </div>
+            <div class="form-row">
+                <label for="email">Email</label>
+                <div class="value">
+                    <input type="email" id="email" name="email" th:field="${userInfo.email}">
+                </div>
+            </div>
+            <div class="form-row">
+                <label for="phoneNumber">Phone number</label>
+                <div class="value">
+                    <input type="text" id="phoneNumber" name="phoneNumber" value="+420 777 888 999">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label for="mainRole">Main role</label>
+                <div class="value">
+                    <input type="text" id="mainRole" name="mainRole" th:field="${userInfo.accountType}">
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <!--wishlist-page section-->
+    <div id="wishlist-container" class="container" style="display:none;">
+
+        <h2>Wishlist</h2>
+        <p th:text="${userInfo.getWishlist().size()} + ' items'"></p>
+        <div class="product-grid">
+            <div th:each="product : ${wishlist}" class="product">
+                <a class="product-link" th:href="@{/product/{id}(id=${product.product.id})}">
+                    <div>
+                        <div class="image-container">
+                            <img src="https://via.placeholder.com/300?text=Product+1" alt="Sample Image">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-title" th:text="${product.product.title}"></div>
+                            <div class="product-desc" th:text="${product.product.desc}"></div>
+                            <div class="price-container">
+                                <p th:text="${product.product.price} +'$'" class="price-text"></p>
+                                <input type="hidden" class="product-id" name="id" th:value="${product.product.id}"/>
+
+
+                                <a>
+                                    <img class="wishlist-icon"
+                                         th:src="${product.isWishListed()}?@{/images/loaded-cart.png}:@{/images/empty-cart.png}"
+                                         alt="add to wishlist"
+                                         data-product-id="${product.product.id}">
+                                </a>
+                                <a>
+                                    <img class="like-icon"
+                                         th:src="${product.isLiked()} ? @{/images/full_heart.png} : @{/images/empty_heart.png}"
+                                         alt="like" data-product-id="${product.product.id}">
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+
+
+    </div>
+    <!--orders-page section-->
+    <div id="orders-container" class="orders-container" style="display:none;">
+        <h2>My Orders</h2>
+        <p th:text="${orders.size()} + ' items purchased'"></p>
+        <div class="orders">
+            <table class="order-table">
+                <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Item Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Order Date</th>
+                    <th>Total</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="order : ${orders}">
+                    <td th:text="${order.id}">1</td>
+                    <td th:text="${order.product.title}">Item Name</td>
+                    <td th:text="${order.quantity}">1</td>
+                    <td th:text="'$' + ${order.product.price}">$0.00</td>
+                    <td th:text="${order.datePurchased}">2024-12-22</td>
+                    <td th:text="'$' + ${order.total}">$0.00</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+
+
+</div>
+
+</body>
+</html>

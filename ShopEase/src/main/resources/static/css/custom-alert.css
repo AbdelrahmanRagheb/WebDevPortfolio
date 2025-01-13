@@ -1,0 +1,38 @@
+.custom-alert {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.custom-alert-content {
+    text-align: center;
+}
+
+.custom-alert-content p {
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.custom-alert-content button {
+    padding: 10px 20px;
+    margin: 5px;
+    background-color: #007bff;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.custom-alert-content button:hover {
+    background-color: #0056b3;
+}

@@ -1,0 +1,317 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+/* Header Styles */
+header {
+    background-color: #333;
+    color: white;
+    padding: 15px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid #0073e6;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+header .logo {
+    margin-left: 20px;
+}
+
+header nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    margin-right: 20px;
+}
+
+header nav ul li {
+    margin: 0 10px;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+    transition: background-color 0.3s;
+}
+
+header nav ul li a:hover {
+    background-color: #0073e6;
+    border-radius: 5px;
+}
+
+header .search-bar {
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+}
+
+header .search-bar input {
+    padding: 10px;
+    margin-right: 5px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    width: 300px;
+}
+
+header .search-bar button {
+    padding: 10px;
+    background-color: #0073e6;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+header .search-bar button:hover {
+    background-color: #005bb5;
+}
+.container {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.product-image {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+.product-image img {
+    max-width: 100%;
+    height: auto;
+}
+.product-details {
+    width: 45%;
+    padding: 20px;
+}
+.product-details h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+.price {
+    font-size: 20px;
+    color: red;
+    margin-bottom: 10px;
+}
+.original-price {
+    text-decoration: line-through;
+    color: grey;
+}
+.reviews {
+    color: red;
+    margin-bottom: 10px;
+}
+.color-options, .size-options {
+    margin-bottom: 10px;
+}
+.color-options span, .size-options span {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+.color-options span.selected, .size-options span.selected {
+    border: 2px solid black;
+}
+.add-to-cart {
+    background-color: red;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+.find-in-store {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.find-in-store img {
+    margin-right: 5px;
+}
+.product-description {
+    margin-top: 20px;
+}
+
+
+.comment-section ,.commentsContainer{
+    width: 80%;
+    max-height: 500px;
+    margin: 0 auto 0;
+    background-color: #fff;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.comment-section h2 {
+    margin-top: 0;
+    font-size: 18px;
+}
+
+#reviewForm {
+    margin-bottom: 30px;
+}
+
+
+#reviewForm button {
+    padding: 10px 20px;
+    background-color: #5cb85c;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#reviewForm button:hover {
+    background-color: #4cae4c;
+}
+
+.comment {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.comment:last-child {
+    border-bottom: none;
+}
+
+.comment .user {
+    font-weight: bold;
+}
+
+.comment .time {
+    font-size: 0.9em;
+    color: #999;
+}
+
+.comment .text {
+    margin: 10px 0;
+}
+
+.product-image {
+    margin-bottom: 20px;
+}
+
+.product-image img {
+    max-width: 100%;
+}
+
+.product-details {
+    margin-bottom: 20px;
+}
+
+.product-description {
+    margin-bottom: 20px;
+}
+
+
+
+.like-icon, .wishlist-icon {
+    width: 24px;
+    height: auto;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+
+.comment-section h2 {
+    margin-top: 0;
+}
+
+#reviewForm {
+    margin-bottom: 30px;
+}
+
+#reviewForm textarea {
+    width: 70%;
+    padding: 10px;
+    margin-right: 10px;
+
+    margin-bottom: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.rating {
+    display: flex;
+    direction: rtl;
+    justify-content: left;
+    gap: 10px;
+    margin-bottom: 5px;
+}
+
+.rating input {
+    display: none;
+}
+
+.rating label {
+    font-size: 30px;
+    color: #ddd;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+/* Change color of stars from left to right on hover */
+.rating label:hover, .rating label:hover ~ label, .rating input:checked ~ label {
+    color: gold; /* Reset color */
+}
+#reviewForm button {
+    padding: 10px 20px;
+    background-color: #5cb85c;
+    border: none;
+    justify-content: center;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#reviewForm button:hover {
+    background-color: #4cae4c;
+}
+
+
+.ratingDisplay {
+    color: gold;
+}
+.alert {
+    background-color: #ffdddd;
+    border: 1px solid #f5c6cb;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.alert p {
+    margin: 0;
+    padding: 0;
+}
+
+.alert button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+.alert button:hover {
+    background-color: #d32f2f;
+}
+
+
+
+
+

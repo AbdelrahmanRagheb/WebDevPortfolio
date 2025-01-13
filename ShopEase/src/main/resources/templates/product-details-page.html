@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <link rel="stylesheet" th:href="@{/css/product-details-page-style.css}" type="text/css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/product-details-page-script.js" type="text/javascript"></script>
+    <script src="/js/like-wishlist-handler.js" type="text/javascript"></script>
+
+</head>
+<body>
+<header>
+    <div class="logo">
+        <h1>ShopEase Store</h1>
+    </div>
+    <nav>
+        <ul>
+            <li><a th:href="@{/}">Home</a></li>
+            <li th:if="${isAuthenticated}">
+                <a th:href="@{/add-product}" methods="GET">Add Product</a></li>
+        </ul>
+    </nav>
+    <div class="search-bar">
+        <form th:action="@{/search}" method="get">
+            <input type="text" name="keyword" th:value="${keyword}!=null?${keyword}:''" placeholder="Search for products...">
+            <button type="submit">Search</button>
+        </form>
+
+    </div>
+    <nav>
+        <ul>
+            <li th:if="${!isAuth}"><a th:href="@{/login}">Login</a></li>
+
+            <li th:if="${isAuth}"><a th:href="@{/dashboard}">Dashboard</a></li>
+
+        </ul>
+    </nav>
+
+
+</header>
+<div class="container">
+    <div class="product-image">
+        <img src="https: via.placeholder.com/300?text=Product+1" th:alt="${product.product.title}">
+
+    </div>
+    <div class="product-details">
+        <h1 th:text="${product.product.title}"></h1>
+        <div class="price">
+            <span th:text="${product.product.price} +'$'"></span>
+        </div>
+        <input type="hidden" th:value="${product.product.id}" class="product-id" id="product-id">
+
+        <div class="reviews">
+            <div class="star-rating">
+
+            </div>
+            <span th:text="'★★★★☆ '+ ${reviews.size()}+' REVIEWS'"></span>
+        </div>
+        <div th:if="${isAuth}">
+            <a>
+                <img class="wishlist-icon"
+                     th:src="${product.isWishListed()}?@{/images/loaded-cart.png}:@{/images/empty-cart.png}"
+                     alt="add to wishlist"
+                     data-product-id="${product.product.id}">
+            </a>
+            <a>
+                <img class="like-icon"
+                     th:src="${product.isLiked()} ? @{/images/full_heart.png} : @{/images/empty_heart.png}"
+                     alt="like" data-product-id="${product.product.id}">
+            </a>
+
+        </div>
+        <div class="product-description">
+            <h2>Product Detail</h2>
+            <p th:text="${product.product.desc}"></p>
+
+        </div>
+    </div>
+
+    <div class="comment-section"><h2>Leave a Comment and Rating</h2>
+        <input type="hidden" id="productId" th:value="${product.product.id}"/>
+        <input type="hidden" id="is-auth" th:value="${isAuth}"/>
+        <input th:if="@{isAuth}" type="hidden" id="username" th:value="${username}"/>
+
+        <form action="#" id="reviewForm">
+            <textarea id="commentInput" placeholder="Leave your comment here..."></textarea>
+            <div class="rating"><input type="radio" name="rating" id="star5" value="5"/><label for="star5"
+                                                                                               title="5 stars">★</label>
+                <input type="radio" name="rating" id="star4" value="4"/><label for="star4" title="4 stars">★</label>
+                <input
+                        type="radio" name="rating" id="star3" value="3"/><label for="star3" title="3 stars">★</label>
+                <input
+                        type="radio" name="rating" id="star2" value="2"/><label for="star2" title="2 stars">★</label>
+                <input
+                        type="radio" name="rating" id="star1" value="1"/><label for="star1" title="1 star">★</label>
+            </div>
+            <button type="submit">Submit Review</button>
+        </form>
+        <div id="custom-alert" class="alert" style="display:none;"><p>You need to be logged in to submit a review.</p>
+            <button id="loginBtn">Log In</button>
+            <button id="signupBtn">Sign Up</button>
+        </div>
+        <div id="commentsContainer">
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

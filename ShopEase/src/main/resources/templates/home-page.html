@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/home-style.css}" type="text/css">
+    <title>EaseShop - Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/review-script.js"></script>
+    <script src="/js/like-wishlist-handler.js"></script>
+
+</head>
+<body>
+<header>
+    <div class="logo">
+        <h1>ShopEase Store</h1>
+    </div>
+    <nav>
+        <ul>
+            <li><a th:href="@{/}">Home</a></li>
+            <li th:if="${isAuthenticated}">
+                <a th:href="@{/add-product}" methods="GET">Add Product</a></li>
+        </ul>
+    </nav>
+    <div class="search-bar">
+        <form th:action="@{/search}" method="get">
+            <input type="text" name="keyword" th:value="${keyword}" placeholder="Search for products...">
+            <button type="submit">Search</button>
+        </form>
+
+    </div>
+    <nav>
+        <ul>
+            <li th:if="${!isAuthenticated}"><a th:href="@{/login}">Login</a></li>
+
+            <li th:if="${isAuthenticated}"><a th:href="@{/dashboard}">Dashboard</a></li>
+
+        </ul>
+    </nav>
+
+
+</header>
+
+<main>
+    <section class="hero">
+        <h2>Welcome to ShopEase Store</h2>
+        <p>Shop the best products at the best prices</p>
+    </section>
+    <div class="categories">
+
+            <div th:each="category : ${categories}" class="category-button">
+                <a class="category-link" th:href="@{/products/{category}(category=${category})}"  th:text="${category}">
+
+                </a>
+            </div>
+
+
+    </div>
+
+    <section class="top-rated-products">
+        <h2>Top Rated Products <a th:href="@{/top-rated-products}" class="see-all">See all</a></h2>
+
+        <div class="product-grid">
+            <div th:each="product : ${topRatedProducts}" class="product">
+                <a class="product-link" th:href="@{/product/{id}(id=${product.product.id})}">
+                    <div>
+                        <div class="image-container">
+                            <img src="https://via.placeholder.com/300?text=Product+1" alt="Sample Image">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-title" th:text="${product.product.title}"></div>
+                            <div class="product-desc" th:text="${product.product.desc}"></div>
+                            <div class="price-container">
+                                <p th:text="${product.product.price} +'$'" class="price-text"></p>
+                                <input type="hidden" class="product-id" id="product-id"
+                                       th:value="${product.product.id}"/>
+                                <input type="hidden" class="product-brand" name="product-brand"
+                                       th:value="${product.brand}"/>
+                                <input type="hidden" class="product-rating" id="product-rating"
+                                       th:value="${product.rating}"/>
+
+                                <div th:if="${isAuthenticated}">
+                                    <a>
+                                        <img class="wishlist-icon"
+                                             th:src="${product.isWishListed()}?@{/images/loaded-cart.png}:@{/images/empty-cart.png}"
+                                             alt="add to wishlist"
+                                             data-product-id="${product.product.id}">
+                                    </a>
+                                    <a>
+                                        <img class="like-icon"
+                                             th:src="${product.isLiked()} ? @{/images/full_heart.png} : @{/images/empty_heart.png}"
+                                             alt="like" data-product-id="${product.product.id}">
+                                    </a>
+
+                                </div>
+                            </div>
+
+                            <div class="star-rating">
+                                <!-- Stars will be dynamically rendered -->
+                            </div>
+
+
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+
+    <section class="products-under-specific-value">
+        <h2>Products under 100$ <a th:href="@{/products-under-100}" class="see-all">See all</a></h2>
+
+        <div class="product-grid">
+            <div th:each="product : ${productUnderSpecificValue}" class="product">
+                <a class="product-link" th:href="@{/product/{id}(id=${product.product.id})}">
+                    <div>
+                        <div class="image-container">
+                            <img src="https://via.placeholder.com/300?text=Product+1" alt="Sample Image">
+                        </div>
+                        <div class="product-info">
+                            <div class="product-title" th:text="${product.product.title}"></div>
+                            <div class="product-desc" th:text="${product.product.desc}"></div>
+                            <div class="price-container">
+                                <p th:text="${product.product.price} +'$'" class="price-text"></p>
+                                <input type="hidden" class="product-id" id="product-id"
+                                       th:value="${product.product.id}"/>
+                                <input type="hidden" class="product-brand" name="product-brand"
+                                       th:value="${product.brand}"/>
+                                <input type="hidden" class="product-rating" id="product-rating"
+                                       th:value="${product.rating}"/>
+
+
+                                <div th:if="${isAuthenticated}">
+                                    <a>
+                                        <img class="wishlist-icon"
+                                             th:src="${product.isWishListed()}?@{/images/loaded-cart.png}:@{/images/empty-cart.png}"
+                                             alt="add to wishlist"
+                                             data-product-id="${product.product.id}">
+                                    </a>
+                                    <a>
+                                        <img class="like-icon"
+                                             th:src="${product.isLiked()} ? @{/images/full_heart.png} : @{/images/empty_heart.png}"
+                                             alt="like" data-product-id="${product.product.id}">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="star-rating">
+                                <!-- Stars will be dynamically rendered -->
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="trending-categories-section">
+        <h2 class="section-title">Hot Trending Categories</h2>
+    <div class="trending-categories-container">
+
+        <div class="categories">
+            <div th:each="category : ${trendingCategories}" class="category-card">
+                <a th:href="@{/products/{category}(category=${category})}" class="category-link">
+
+                    <div class="category-info">
+                        <h3 class="category-name" th:text="${category}"></h3>
+
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    </section>
+
+
+</main>
+
+<footer>
+    <section class="footer-content">
+        <div class="footer-section">
+            <img src="https://via.placeholder.com/50?text=Icon" alt="Free Delivery Icon">
+            <h4>Free Delivery</h4>
+            <p>For all orders over $120</p>
+        </div>
+        <div class="footer-section">
+            <img src="https://via.placeholder.com/50?text=Icon" alt="Safe Payment Icon">
+            <h4>Safe Payment</h4>
+            <p>100% secure payment</p>
+        </div>
+        <div class="footer-section">
+            <h4>About Us</h4>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce at elit mauris.</p>
+        </div>
+        <div class="footer-section">
+            <h4>Contact Us</h4>
+            <p>Email: info@shopifylikestore.com</p>
+            <p>Phone: +123 456 7890</p>
+        </div>
+        <div class="footer-section">
+            <h4>Follow Us</h4>
+            <p>Facebook | Twitter | Instagram</p>
+        </div>
+    </section>
+    <p>&copy; 2024 Shopify-Like Store. All rights reserved.</p>
+</footer>
+
+
+</body>
+</html>
