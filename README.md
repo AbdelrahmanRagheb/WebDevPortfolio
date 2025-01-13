@@ -20,7 +20,7 @@ Stay tuned for more exciting backend projects, as I continue to develop and impr
 ---
 
 ## Project Structure
-This repository is organized into multiple sub-projects, each showcasing different backend applications developed using **Spring Boot**. The projects are structured to demonstrate various aspects of backend development, including:
+This repository is organized into multiple sub-projects, each showcasing different backend applications developed using **Spring & Spring Boot**. The projects are structured to demonstrate various aspects of backend development, including:
 
 - **REST API design**
 - **Database management**
