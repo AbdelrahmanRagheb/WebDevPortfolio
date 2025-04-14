@@ -1,67 +1,62 @@
-
 # TaskAsync - Microservices Task Management Backend
 
-Welcome to **TaskAsync**, a microservices-based backend for a task management system built using **Spring Boot** and **Java**. This project showcases my skills in developing secure, resilient, and scalable backend services with modern architectural patterns. TaskAsync handles user authentication, task assignments, and real-time notifications, demonstrating my ability to build robust microservices as a junior developer.
+Welcome to **TaskAsync**, a microservices-based backend for a task management system built with **Spring Boot** and **Java**. This project highlights my skills as a junior developer in creating secure, resilient, and scalable backend services using modern patterns like event-driven architecture and containerization.
+
+---
 
 ### Project Overview
 
-TaskAsync is designed to manage tasks and notifications in a distributed system. It features secure authentication with **Keycloak**, event-driven communication with **RabbitMQ**, and containerized deployment with **Docker**. The project incorporates the **circuit breaker pattern** for resilience and comprehensive testing to ensure reliability.
+TaskAsync powers task management with features like user authentication, task assignments, and real-time notifications. It leverages **Keycloak** for security, **RabbitMQ** for events, and **Docker** for deployment, showcasing my ability to build robust microservices.
 
-- **Secure Authentication**: Integrates OAuth2 and OpenID Connect via Keycloak for user login and API protection.
-- **Task Management**: Supports task creation, assignment, and status tracking (To-Do, In Progress, Done).
-- **Real-Time Notifications**: Delivers task and comment notifications using RabbitMQ and JSON metadata.
-- **Resilience**: Implements circuit breakers to handle service failures gracefully.
-- **Testing**: Includes unit tests with JUnit and H2 for 100% coverage of core services.
+- **Secure Authentication**: Uses OAuth2/OpenID Connect via Keycloak to protect APIs.
+- **Task Management**: Enables task creation, assignment, and status tracking.
+- **Real-Time Notifications**: Sends task and comment alerts with RabbitMQ.
+- **Resilience**: Applies circuit breakers for fault tolerance.
+- **Testing**: Features unit tests with JUnit and H2 for full coverage.
+
+---
 
 ### Technologies Used
-- **Spring Boot** for RESTful APIs and microservices
-- **Spring Security** with OAuth2/OpenID Connect for authentication
-- **JPA / Hibernate** for database operations
-- **MySQL** for production data storage
-- **H2 Database** for testing
-- **RabbitMQ** for event-driven messaging
-- **Keycloak** for identity and access management
-- **Docker** for containerized databases and services
-- **Spring Cloud Circuit Breaker** for resilience
-- **JUnit** and **Mockito** for unit testing
-- **Maven** for build management
+
+- **Spring Boot**: RESTful APIs and microservices
+- **Spring Security**: OAuth2/OpenID Connect authentication
+- **JPA/Hibernate**: Database operations
+- **MySQL**: Production data storage
+- **H2 Database**: Testing
+- **RabbitMQ**: Event-driven messaging
+- **Keycloak**: Identity management
+- **Docker**: Containerized services
+- **Spring Cloud Circuit Breaker**: Resilience
+- **Spring Cloud Netflix Eureka**: Service discovery
+- **Spring Cloud Gateway**: API routing
+- **Spring Cloud Config**: Centralized configuration
+- **JUnit/Mockito**: Unit testing
+- **Maven**: Build management
+
+---
 
 ### Project Structure
-The project is organized to highlight microservices development:
-- **REST API Design**: Endpoints for users, tasks, and notifications
-- **Database Management**: MySQL and H2 with JPA
-- **Authentication**: Keycloak with OAuth2 tokens
-- **Event-Driven Architecture**: RabbitMQ for async notifications
-- **Error Handling**: Circuit breakers for fault tolerance
-- **Testing**: Unit tests for services like `INotificationServiceImpl`
 
-```
-TaskAsync/
-├── src/
-│   ├── main/
-│   │   ├── java/com/taskasync/userservice/
-│   │   │   ├── entity/           # Entities (User, UserNotification)
-│   │   │   ├── repository/       # JPA repositories
-│   │   │   ├── service/          # Services (e.g., INotificationServiceImpl)
-│   │   │   └── dto/             # DTOs
-│   │   └── resources/            # application.properties
-│   └── test/
-│       └── java/com/taskasync/userservice/
-│           └── service/impl/     # Tests (e.g., INotificationServiceImplTest)
-├── pom.xml                       # Maven dependencies
-└── README.md                     # This file
+TaskAsync is a microservices system with multiple Spring Boot applications, each serving a specific role:
+- **config-server**: Centralizes configuration for all services.
+- **eureka-server**: Handles service discovery with Spring Cloud Netflix Eureka.
+- **gateway-server**: Routes API requests using Spring Cloud Gateway.
+- **notification-service**: Manages task and comment notifications with RabbitMQ.
+- **task-service**: Handles task creation, assignment, and status updates.
+- **user-service**: Manages user profiles and authentication logic.
 
+---
 
 ### Getting Started
 
-To run TaskAsync locally, follow these steps:
+Follow these steps to run TaskAsync locally:
 
 #### Prerequisites
-Ensure you have the following installed:
-- **Java 17**
-- **Maven 3.8+**
-- **Docker**
-- **Git**
+
+- Java 17
+- Maven 3.8+
+- Docker
+- Git
 
 #### Installation
 
@@ -90,7 +85,7 @@ Ensure you have the following installed:
      ```
 
 3. Configure the application:
-   - Update `src/main/resources/application.properties`:
+   - Edit `user-service/src/main/resources/application.properties`:
      ```properties
      spring.datasource.url=jdbc:mysql://localhost:3001/user-service
      spring.datasource.username=root
@@ -100,42 +95,63 @@ Ensure you have the following installed:
      spring.rabbitmq.port=5672
      spring.security.oauth2.resourceserver.jwt.issuer-uri=http://localhost:7080/realms/master
      ```
+   - Configure other services similarly, ensuring Eureka and Config Server settings.
 
-4. Build the project:
+4. Build all services:
    ```bash
-   mvn clean install
+   cd config-server && mvn clean install
+   cd ../eureka-server && mvn clean install
+   cd ../gateway-server && mvn clean install
+   cd ../notification-service && mvn clean install
+   cd ../task-service && mvn clean install
+   cd ../user-service && mvn clean install
    ```
 
-5. Run the application:
-   ```bash
-   mvn spring-boot:run
-   ```
+5. Run the services (in separate terminals):
+   - Start Config Server:
+     ```bash
+     cd config-server && mvn spring-boot:run
+     ```
+   - Start Eureka Server:
+     ```bash
+     cd eureka-server && mvn spring-boot:run
+     ```
+   - Start Gateway Server:
+     ```bash
+     cd gateway-server && mvn spring-boot:run
+     ```
+   - Start Notification, Task, and User Services:
+     ```bash
+     cd notification-service && mvn spring-boot:run
+     cd ../task-service && mvn spring-boot:run
+     cd ../user-service && mvn spring-boot:run
+     ```
 
-6. Run tests:
+6. Run tests for a specific service (e.g., user-service):
    ```bash
-   mvn test
+   cd user-service && mvn test
    ```
 
 #### Keycloak Setup
-- Visit `http://localhost:7080` and log in with `admin/admin`.
-- Create a realm (e.g., `taskasync`) and a client for OAuth2.
-- Update the issuer URI in `application.properties` if needed.
+
+- Access `http://localhost:7080` and log in with `admin/admin`.
+- Create a realm (e.g., `taskasync`) and configure an OAuth2 client.
+- Update `application.properties` with the realm’s issuer URI if needed.
+
+---
 
 ### Upcoming Enhancements
-I’m excited to expand TaskAsync with:
+
+I’m eager to improve TaskAsync by adding:
 - Swagger for API documentation
-- Kubernetes for container orchestration
+- Kubernetes for orchestration
 - GitHub Actions for CI/CD
 - Monitoring with Prometheus and Grafana
 
 ---
 
-*This project is part of my [WebDevPortfolio](https://github.com/AbdelrahmanRagheb/WebDevPortfolio), showcasing my backend development skills.
-I’d love to hear your feedback or discuss collaboration:
-GitHub: AbdelrahmanRagheb
-LinkedIn: [https://www.linkedin.com/in/abdelrahman-fathy-93303833a]
-Email: [abdelrahman.ragheb01@gmail.com]
+*This project is part of my [WebDevPortfolio](https://github.com/AbdelrahmanRagheb/WebDevPortfolio), showcasing my backend development skills. Reach out for feedback or collaboration:  
+GitHub: [AbdelrahmanRagheb](https://github.com/AbdelrahmanRagheb)  
+LinkedIn: [abdelrahman-fathy-93303833a](https://www.linkedin.com/in/abdelrahman-fathy-93303833a)  
+Email: [abdelrahman.ragheb01@gmail.com]*
 ```
----
-
-
