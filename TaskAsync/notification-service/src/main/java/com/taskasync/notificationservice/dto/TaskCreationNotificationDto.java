@@ -46,6 +46,6 @@ public class TaskCreationNotificationDto implements TaskNotification {
         private String title;
         private Long creatorId;
         private String creatorUsername;
-        private String message; // Used in comment/deleted notifications
+        private String message;
     }
 }

@@ -6,7 +6,7 @@ import com.taskasync.taskservice.entity.TaskComment;
 public class TaskCommentMapper {
     public static TaskCommentDto mapToTaskCommentDto(TaskComment taskComment, TaskCommentDto taskCommentDto) {
         if (taskComment == null) {
-            return taskCommentDto; // Return empty DTO or null, depending on your preference
+            return taskCommentDto;
         }
         taskCommentDto.setCommenterId(taskComment.getCommenterId());
         taskCommentDto.setId(taskComment.getId());

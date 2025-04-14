@@ -30,7 +30,7 @@ public class INotificationServiceImpl implements INotificationService {
         metadata.put("assigned_by_name", assignedByName);
         metadata.put("role", "ASSIGNEE");
 
-//        String message = String.format("You've been assigned to task '%s'", taskTitle);
+
 
         UserNotification notification = new UserNotification(
                 userId,

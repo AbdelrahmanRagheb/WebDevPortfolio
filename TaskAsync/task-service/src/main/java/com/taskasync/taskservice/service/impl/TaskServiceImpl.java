@@ -115,7 +115,7 @@ public class TaskServiceImpl implements ITaskService {
             iTaskHistoryService.deleteByTaskId(id);
             taskRepository.delete(task);
 
-            // Send deletion notification
+
             notificationProducerService.sendTaskDeletedNotification(
                     taskId,
                     taskTitle,
@@ -171,11 +171,11 @@ public class TaskServiceImpl implements ITaskService {
 
     private boolean checkCircularDependency(Task task, Long targetId, java.util.Set<Long> visited) {
         if (visited.contains(task.getId())) {
-            return false; // Already visited, no cycle here
+            return false;
         }
         visited.add(task.getId());
         if (task.getId().equals(targetId)) {
-            return true; // Found a cycle
+            return true;
         }
         return task.getDependencies().stream()
                 .anyMatch(dep -> checkCircularDependency(dep.getDependsOnTask(), targetId, visited));

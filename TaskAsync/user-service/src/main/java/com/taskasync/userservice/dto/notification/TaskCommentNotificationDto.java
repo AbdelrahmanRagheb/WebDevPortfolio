@@ -12,7 +12,7 @@ import java.util.Map;
 public class TaskCommentNotificationDto implements TaskNotification {
     private Long taskId;
     private String title;
-    private Long creatorId; // Task creator, not commenter
+    private Long creatorId;
     private String creatorUsername;
     private LocalDateTime notificationDateTime;
     private Map<Long, List<CommentMessage>> userNotifications = new HashMap<>();

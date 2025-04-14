@@ -58,7 +58,7 @@ public class TaskHistoryServiceImpl implements ITaskHistoryService {
             Map<String, Object> existingProps = PropertyUtils.describe(existingTask);
             Map<String, Object> dtoProps = PropertyUtils.describe(taskDto);
 
-            // Use reflection to determine which fields are explicitly set in taskDto
+
             Map<String, Boolean> dtoSetFields = new HashMap<>();
             for (java.lang.reflect.Field field : TaskDto.class.getDeclaredFields()) {
                 field.setAccessible(true);
@@ -68,7 +68,7 @@ public class TaskHistoryServiceImpl implements ITaskHistoryService {
 
             for (String propName : existingProps.keySet()) {
                 if (propName.equals("id") || propName.equals("comments") || propName.equals("class") ||
-                        propName.equals("createdAt") || propName.equals("updatedAt")) { // Exclude audit fields
+                        propName.equals("createdAt") || propName.equals("updatedAt")) {
                     continue;
                 }
                 if (dtoProps.containsKey(propName) && dtoSetFields.getOrDefault(propName, false)) {
@@ -88,7 +88,7 @@ public class TaskHistoryServiceImpl implements ITaskHistoryService {
         if (!changes.isEmpty()) {
             TaskHistory history = new TaskHistory();
             history.setTask(existingTask);
-            history.setChangedByUserId(1L); // Adjust as needed
+            history.setChangedByUserId(1L);
             history.setChangeDetails(new ChangeDetails(changes));
             return history;
         }

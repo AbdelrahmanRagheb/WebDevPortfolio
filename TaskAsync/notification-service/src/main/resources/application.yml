@@ -2,8 +2,8 @@ server:
   port: 8083
   error:
     include-message: always
-    include-binding-errors: always # Required for validation errors
-    include-stacktrace: never # Avoid exposing stack traces unless necessary
+    include-binding-errors: always
+    include-stacktrace: never
 
 spring:
   application:

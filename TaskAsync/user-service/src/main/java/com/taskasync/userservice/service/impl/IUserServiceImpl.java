@@ -29,13 +29,13 @@ public class IUserServiceImpl implements IUserService {
     public Long getUserIdByKeycloakId(String keycloakId) {
         return userRepository.findByKeycloakSubjectId(keycloakId)
                 .map(User::getId)
-                .orElse(null); // Return null if no user is found
+                .orElse(null);
     }
 
     @Override
     public UserDto getUserByKeycloakId(String keycloakId) {
         return userRepository.findByKeycloakSubjectId(keycloakId)
                 .map(user -> UserMapper.mapToUserDto(user, new UserDto()))
-                .orElse(null); // Return null if no user is found
+                .orElse(null);
     }
 }

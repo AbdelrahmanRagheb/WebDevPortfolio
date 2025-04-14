@@ -4,7 +4,7 @@ import com.taskasync.taskservice.dto.TaskDto;
 import com.taskasync.taskservice.entity.Task;
 
 public class TaskMapper {
-    public static TaskDto mapToTaskDto(Task task,TaskDto taskDto) {
+    public static TaskDto mapToTaskDto(Task task, TaskDto taskDto) {
 
         taskDto.setId(task.getId());
         taskDto.setTitle(task.getTitle());
@@ -19,21 +19,16 @@ public class TaskMapper {
         taskDto.setCreatedAt(task.getCreatedAt());
         taskDto.setUpdatedAt(task.getUpdatedAt());
         taskDto.setRecurrenceRule(task.getRecurrenceRule());
-//        taskDto.setDependencies(task.getDependencies());
-//        taskDto.setDependentTasks(task.getDependentTasks());
         return taskDto;
     }
 
-    public static Task mapToTask(TaskDto taskDto,Task task) {
-//        task.setId(taskDto.getId());
+    public static Task mapToTask(TaskDto taskDto, Task task) {
         task.setTitle(taskDto.getTitle());
         task.setCategory(taskDto.getCategory());
-      //  task.setCreatorId(taskDto.getCreatorId());
         task.setDescription(taskDto.getDescription());
         task.setPriority(taskDto.getPriority());
         task.setStatus(taskDto.getStatus());
         task.setAssignedUsers(taskDto.getAssignedUsers());
-      //  task.setCreatedAt(taskDto.getCreatedAt());
         task.setDueDate(taskDto.getDueDate());
         task.setEstimatedEffort(taskDto.getEstimatedEffort());
         task.setRecurrenceRule(taskDto.getRecurrenceRule());
