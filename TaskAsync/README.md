@@ -1,130 +1,141 @@
-### **README Template for TaskAsync**
-
 ```markdown
-# TaskAsync - Microservices-Based Task Management Backend
+# TaskAsync - Microservices Task Management Backend
 
-![Java](https://img.shields.io/badge/Java-17-ED8B00.svg?logo=java) ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.3.1-6DB33F.svg?logo=spring) ![MySQL](https://img.shields.io/badge/MySQL-8.3-4479A1.svg?logo=mysql) ![H2](https://img.shields.io/badge/H2-2.2.224-000000.svg) ![JUnit](https://img.shields.io/badge/JUnit-5.10.2-25A162.svg)
+Welcome to **TaskAsync**, a microservices-based backend for a task management system built using **Spring Boot** and **Java**. This project showcases my skills in developing secure, resilient, and scalable backend services with modern architectural patterns. TaskAsync handles user authentication, task assignments, and real-time notifications, demonstrating my ability to build robust microservices as a junior developer.
 
-TaskAsync is a scalable microservices backend for a task management system, designed to handle user management, task assignments, and notifications. Built with **Spring Boot** and **Java**, it leverages a modular architecture to ensure flexibility and maintainability. This project showcases my skills in microservices development, RESTful API design, and robust testing as a junior developer.
+### Project Overview
 
-## 🚀 Features
+TaskAsync is designed to manage tasks and notifications in a distributed system. It features secure authentication with **Keycloak**, event-driven communication with **RabbitMQ**, and containerized deployment with **Docker**. The project incorporates the **circuit breaker pattern** for resilience and comprehensive testing to ensure reliability.
 
-- **User Management**: Create and manage user profiles with unique identifiers (Keycloak integration).
-- **Task Assignments**: Assign tasks to users with roles (e.g., Assignee) and track statuses (To-Do, In Progress, Done).
-- **Notifications**: Generate real-time notifications for task assignments and comments, stored with JSON metadata.
-- **RESTful APIs**: Expose endpoints for CRUD operations on users, tasks, and notifications.
-- **Testing**: Comprehensive unit tests with JUnit and H2, achieving 100% coverage for core services.
-- **Database**: Supports MySQL for production and H2 for testing, with JPA/Hibernate for ORM.
+- **Secure Authentication**: Integrates OAuth2 and OpenID Connect via Keycloak for user login and API protection.
+- **Task Management**: Supports task creation, assignment, and status tracking (To-Do, In Progress, Done).
+- **Real-Time Notifications**: Delivers task and comment notifications using RabbitMQ and JSON metadata.
+- **Resilience**: Implements circuit breakers to handle service failures gracefully.
+- **Testing**: Includes unit tests with JUnit and H2 for 100% coverage of core services.
 
-## 🛠️ Tech Stack
+### Technologies Used
+- **Spring Boot** for RESTful APIs and microservices
+- **Spring Security** with OAuth2/OpenID Connect for authentication
+- **JPA / Hibernate** for database operations
+- **MySQL** for production data storage
+- **H2 Database** for testing
+- **RabbitMQ** for event-driven messaging
+- **Keycloak** for identity and access management
+- **Docker** for containerized databases and services
+- **Spring Cloud Circuit Breaker** for resilience
+- **JUnit** and **Mockito** for unit testing
+- **Maven** for build management
 
-- **Backend**: Java 17, Spring Boot 3.3.1, Spring Data JPA, Hibernate
-- **Database**: MySQL 8.3 (production), H2 2.2.224 (testing)
-- **Testing**: JUnit 5, Mockito
-- **Build Tool**: Maven
-- **Other**: JSON for metadata, Git for version control
-
-## 📂 Project Structure
+### Project Structure
+The project is organized to highlight microservices development:
+- **REST API Design**: Endpoints for users, tasks, and notifications
+- **Database Management**: MySQL and H2 with JPA
+- **Authentication**: Keycloak with OAuth2 tokens
+- **Event-Driven Architecture**: RabbitMQ for async notifications
+- **Error Handling**: Circuit breakers for fault tolerance
+- **Testing**: Unit tests for services like `INotificationServiceImpl`
 
 ```
 TaskAsync/
 ├── src/
 │   ├── main/
 │   │   ├── java/com/taskasync/userservice/
-│   │   │   ├── entity/           # JPA entities (User, UserTask, UserNotification)
-│   │   │   ├── repository/       # Spring Data JPA repositories
-│   │   │   ├── service/          # Business logic (e.g., INotificationServiceImpl)
-│   │   │   └── dto/             # Data transfer objects
-│   │   └── resources/            # Configuration files (application.properties)
+│   │   │   ├── entity/           # Entities (User, UserNotification)
+│   │   │   ├── repository/       # JPA repositories
+│   │   │   ├── service/          # Services (e.g., INotificationServiceImpl)
+│   │   │   └── dto/             # DTOs
+│   │   └── resources/            # application.properties
 │   └── test/
 │       └── java/com/taskasync/userservice/
-│           └── service/impl/     # Unit tests (e.g., INotificationServiceImplTest)
+│           └── service/impl/     # Tests (e.g., INotificationServiceImplTest)
 ├── pom.xml                       # Maven dependencies
 └── README.md                     # This file
 ```
 
-## 🏗️ Getting Started
+### Getting Started
 
-### Prerequisites
-- Java 17
-- Maven 3.8+
-- MySQL 8.3 (optional for production)
-- Git
+To run TaskAsync locally, follow these steps:
 
-### Installation
-1. **Clone the repository**:
+#### Prerequisites
+Ensure you have the following installed:
+- **Java 17**
+- **Maven 3.8+**
+- **Docker**
+- **Git**
+
+#### Installation
+
+1. Clone the repository:
    ```bash
    git clone https://github.com/AbdelrahmanRagheb/WebDevPortfolio.git
    cd WebDevPortfolio/TaskAsync
    ```
 
-2. **Configure the database**:
-   - For testing, H2 is used by default (no setup needed).
-   - For MySQL, update `src/main/resources/application.properties`:
-     ```properties
-     spring.datasource.url=jdbc:mysql://localhost:3306/taskasync
-     spring.datasource.username=your_username
-     spring.datasource.password=your_password
-     spring.jpa.hibernate.ddl-auto=update
+2. Set up Docker containers:
+   - MySQL for user-service:
+     ```bash
+     docker run -p 3001:3306 --name user-service -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=user-service -d mysql
+     ```
+   - MySQL for task-service:
+     ```bash
+     docker run -p 3000:3306 --name task-service -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=task-service -d mysql
+     ```
+   - RabbitMQ:
+     ```bash
+     docker run -d -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:4.0-management
+     ```
+   - Keycloak:
+     ```bash
+     docker run -d -p 7080:8080 -e KC_BOOTSTRAP_ADMIN_USERNAME=admin -e KC_BOOTSTRAP_ADMIN_PASSWORD=admin quay.io/keycloak/keycloak:26.1.3 start-dev
      ```
 
-3. **Build the project**:
+3. Configure the application:
+   - Update `src/main/resources/application.properties`:
+     ```properties
+     spring.datasource.url=jdbc:mysql://localhost:3001/user-service
+     spring.datasource.username=root
+     spring.datasource.password=root
+     spring.jpa.hibernate.ddl-auto=update
+     spring.rabbitmq.host=localhost
+     spring.rabbitmq.port=5672
+     spring.security.oauth2.resourceserver.jwt.issuer-uri=http://localhost:7080/realms/master
+     ```
+
+4. Build the project:
    ```bash
    mvn clean install
    ```
 
-4. **Run the application**:
+5. Run the application:
    ```bash
    mvn spring-boot:run
    ```
 
-5. **Run tests**:
+6. Run tests:
    ```bash
    mvn test
    ```
 
-### API Endpoints (Example)
-- `POST /api/users`: Create a new user
-- `GET /api/users/{id}`: Retrieve user details
-- `POST /api/notifications/task`: Create a task assignment notification
-- `GET /api/notifications/user/{userId}`: List user notifications
+#### Keycloak Setup
+- Visit `http://localhost:7080` and log in with `admin/admin`.
+- Create a realm (e.g., `taskasync`) and a client for OAuth2.
+- Update the issuer URI in `application.properties` if needed.
 
-*Note*: Full API documentation is available via [Swagger/Postman, if implemented].
-
-## 🧪 Testing
-
-The project includes robust unit tests for core services:
-- **Notification Service**: Tested `INotificationServiceImpl` with JUnit and H2, covering task assignment and comment notifications.
-- **Coverage**: Achieved 100% test pass rate for notification creation, retrieval, and edge cases.
-- **Example Test**:
-  ```java
-  @Test
-  void testCreateTaskAssignmentNotification_Success() {
-      // Tests notification creation with JSON metadata
-  }
-  ```
-
-## 🌟 Key Contributions
-
-- Designed a modular microservice for notifications, isolating logic for task events.
-- Implemented JSON metadata storage for flexible task data (e.g., `task_id`, `task_title`).
-- Wrote 20+ unit tests, ensuring reliability and catching edge cases like type mismatches.
-- Optimized JPA queries, reducing test runtime by 15% with H2.
-
-## 📈 Future Enhancements
-
-- Integrate Apache Kafka for event-driven notifications.
-- Deploy with Docker and Kubernetes for scalability.
-- Add Swagger for API documentation.
-- Implement CI/CD with GitHub Actions.
-
-## 📬 Contact
-
-Feel free to reach out for feedback or collaboration:
-- **GitHub**: [AbdelrahmanRagheb](https://github.com/AbdelrahmanRagheb)
-- **LinkedIn**: [Your LinkedIn URL]
-- **Email**: [abdelrahman.ragheb01@gmail.com]
+### Upcoming Enhancements
+I’m excited to expand TaskAsync with:
+- Swagger for API documentation
+- Kubernetes for container orchestration
+- GitHub Actions for CI/CD
+- Monitoring with Prometheus and Grafana
 
 ---
-*Built by Abdelrahman Ragheb, a junior developer passionate about microservices and scalable systems.*
+
+*This project is part of my [WebDevPortfolio](https://github.com/AbdelrahmanRagheb/WebDevPortfolio), showcasing my backend development skills.
+I’d love to hear your feedback or discuss collaboration:
+GitHub: AbdelrahmanRagheb
+LinkedIn: [https://www.linkedin.com/in/abdelrahman-fathy-93303833a]
+Email: [abdelrahman.ragheb01@gmail.com]
 ```
+---
+
+
