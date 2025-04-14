@@ -1,0 +1,25 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: "task-service"
+  config:
+    import: "optional:configserver:http://localhost:8071/"
+  cloud:
+    stream:
+      bindings:
+        taskNotification-out-0:
+          destination: task-notifications
+          content-type: application/json
+          producer:
+            content-type: application/json
+            useNativeEncoding: false
+#      rabbit:
+#        bindings:
+#          taskNotification-out-0:
+#            producer:
+#              content-type: application/json
+#        default:
+#          producer:
+#            useNativeEncoding: false

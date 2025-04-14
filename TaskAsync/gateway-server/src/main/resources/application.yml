@@ -1,0 +1,35 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: "gateway-server"
+  config:
+    import: "configserver:http://localhost:8071/"
+
+
+
+resilience4j:
+  timelimiter:
+    instances:
+      userServiceCircuitBreaker:
+        timeoutDuration: 5000ms
+  circuitbreaker:
+    configs:
+      default:
+        sliding-window-size: 10
+        permitted-number-of-calls-in-half-open-state: 2
+        failure-rate-threshold: 50
+        wait-duration-in-open-state:
+          seconds: 10
+
+
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.springframework.web: DEBUG
+    root: INFO
+    org.springframework.cloud.gateway: DEBUG
+    reactor.netty: INFO
+

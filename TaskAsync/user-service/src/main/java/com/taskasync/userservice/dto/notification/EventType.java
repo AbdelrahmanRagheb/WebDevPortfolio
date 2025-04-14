@@ -1,0 +1,5 @@
+package com.taskasync.userservice.dto.notification;
+
+public enum EventType {
+    TASK_CREATED, TASK_UPDATED, TASK_COMMENT_ADDED, TASK_DELETED, TASK_COMPLETED, TASK_ROLE_REMOVED,TASK_ROLE_ADDED,TASK_ROLE_CHANGED
+}

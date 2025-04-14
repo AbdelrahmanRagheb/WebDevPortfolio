@@ -1,0 +1,26 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: "user-service"
+  config:
+    import: "optional:configserver:http://localhost:8071/"
+  cloud:
+    function:
+      definition: receiveUserNotification
+    stream:
+      bindings:
+        receiveUserNotification-in-0:
+          destination: user-notifications
+          group: ${spring.application.name}
+          content-type: application/json
+          consumer:
+            useNativeDecoding: false
+
+
+
+logging:
+  level:
+    com.taskasync.userservice: DEBUG
+    org.hibernate.SQL: DEBUG

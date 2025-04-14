@@ -1,0 +1,35 @@
+server:
+  port: 8083
+  error:
+    include-message: always
+    include-binding-errors: always # Required for validation errors
+    include-stacktrace: never # Avoid exposing stack traces unless necessary
+
+spring:
+  application:
+    name: "notification-service"
+  config:
+    import: "configserver:http://localhost:8071/"
+  cloud:
+    function:
+      definition: receiveTaskNotification
+    stream:
+      bindings:
+        receiveTaskNotification-in-0:
+          destination: task-notifications
+          group: ${spring.application.name}
+          content-type: application/json
+          consumer:
+            useNativeDecoding: false
+        forwardNotification-out-0:
+          destination: user-notifications
+          content-type: application/json
+      rabbit:
+        bindings:
+          receiveTaskNotification-in-0:
+            consumer:
+              auto-bind-dlq: true
+              dead-letter-exchange: DLX
+              dead-letter-queue-name: task-notifications-dlq.notification-service
+
+
