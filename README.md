@@ -6,7 +6,8 @@ Welcome to my **Web Development Portfolio** repository. This repository is a col
 
 - **Shopease**: An e-commerce platform featuring user authentication, product management, order processing, and an admin dashboard.
 - **Blogify**: A blogging platform where users can create, edit, and manage blog posts, as well as interact with content via comments, likes, and shares.
-
+- **TaskAsync**: A microservices-based task management system with secure authentication (OAuth2 via Keycloak), event-driven notifications (RabbitMQ), and containerized deployment (Docker). Includes service discovery (Eureka) and API routing (Gateway), showcasing my ability to build resilient systems.
+  
 ### Technologies Used
 - **Spring Boot** for building RESTful APIs and backend services
 - **Spring Security** for user authentication and authorization
