@@ -1,4 +1,4 @@
-```markdown
+
 # TaskAsync - Microservices Task Management Backend
 
 Welcome to **TaskAsync**, a microservices-based backend for a task management system built using **Spring Boot** and **Java**. This project showcases my skills in developing secure, resilient, and scalable backend services with modern architectural patterns. TaskAsync handles user authentication, task assignments, and real-time notifications, demonstrating my ability to build robust microservices as a junior developer.
@@ -50,7 +50,7 @@ TaskAsync/
 │           └── service/impl/     # Tests (e.g., INotificationServiceImplTest)
 ├── pom.xml                       # Maven dependencies
 └── README.md                     # This file
-```
+
 
 ### Getting Started
 
