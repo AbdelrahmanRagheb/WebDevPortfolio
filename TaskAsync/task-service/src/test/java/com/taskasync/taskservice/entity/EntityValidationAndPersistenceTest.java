@@ -39,11 +39,11 @@ public class EntityValidationAndPersistenceTest {
 
     @BeforeEach
     void setup() {
-        // Ensure the database is clean before each test
+        
         entityManager.clear();
     }
 
-    // --- Task Entity Tests ---
+    
     @Test
     void testTask_ValidEntity_ShouldPassValidation() {
         Task task = new Task();
@@ -81,7 +81,7 @@ public class EntityValidationAndPersistenceTest {
         task.setTitle("Task");
         task.setPriority(Priority.MEDIUM);
         task.setStatus(Status.TODO);
-        task.setAssignedUsers(new HashMap<>()); // Empty map
+        task.setAssignedUsers(new HashMap<>()); 
 
         Set<ConstraintViolation<Task>> violations = validator.validate(task);
         assertEquals(1, violations.size());
@@ -98,7 +98,7 @@ public class EntityValidationAndPersistenceTest {
         Map<Long, String> assignedUsers = new HashMap<>();
         assignedUsers.put(1L, "reviewer");
         task.setAssignedUsers(assignedUsers);
-        task.setDueDate(LocalDateTime.now().minusDays(1)); // Past date
+        task.setDueDate(LocalDateTime.now().minusDays(1)); 
 
         Set<ConstraintViolation<Task>> violations = validator.validate(task);
         assertEquals(1, violations.size());
@@ -126,12 +126,12 @@ public class EntityValidationAndPersistenceTest {
 
         assertNotNull(persistedTask.getId());
         assertNotNull(persistedTask.getCreatedAt());
-        assertNull(persistedTask.getUpdatedAt()); // updatedAt is set on update, not insert
+        assertNull(persistedTask.getUpdatedAt()); 
         assertEquals(1, persistedTask.getComments().size());
         assertEquals("Test Comment", persistedTask.getComments().getFirst().getContent());
     }
 
-    // --- TaskComment Entity Tests ---
+    
     @Test
     void testTaskComment_ValidEntity_ShouldPassValidation() {
         Task task = new Task();
@@ -203,7 +203,7 @@ public class EntityValidationAndPersistenceTest {
         assertEquals(parentComment.getId(), persistedComment.getParentComment().getId());
     }
 
-    // --- TaskDependency Entity Tests ---
+    
     @Test
     void testTaskDependency_ValidEntity_ShouldPassValidation() {
         Task task1 = new Task();
@@ -285,7 +285,7 @@ public class EntityValidationAndPersistenceTest {
         assertEquals(task2.getId(), persistedDependency.getDependsOnTask().getId());
     }
 
-    // --- TaskHistory Entity Tests ---
+    
     @Test
     void testTaskHistory_ValidEntity_ShouldPassValidation() {
         Task task = new Task();
@@ -300,7 +300,7 @@ public class EntityValidationAndPersistenceTest {
         TaskHistory history = new TaskHistory();
         history.setTask(task);
         history.setChangedByUserId(1L);
-        history.setChangeDetails(new ChangeDetails()); // Adjust based on your ChangeDetails implementation
+        history.setChangeDetails(new ChangeDetails()); 
 
         Set<ConstraintViolation<TaskHistory>> violations = validator.validate(history);
         assertTrue(violations.isEmpty(), "Valid TaskHistory should have no validation errors");

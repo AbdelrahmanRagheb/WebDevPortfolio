@@ -33,10 +33,10 @@ public class EntityValidationAndPersistenceTest {
 
     @BeforeEach
     void setup() {
-        entityManager.clear(); // Ensure clean database before each test
+        entityManager.clear(); 
     }
 
-    // --- User Entity Tests ---
+    
     @Test
     void testUser_ValidEntity_ShouldPassValidation() {
         User user = new User();
@@ -67,47 +67,47 @@ public class EntityValidationAndPersistenceTest {
 
     @Test
     void testUserNotification_Persist_ShouldSetAuditFields() {
-        // Arrange
+        
         User user = new User();
         user.setKeycloakSubjectId("keycloak-123");
         user.setEmail("test@example.com");
         user.setUsername("user");
-        user = entityManager.persistAndFlush(user); // Ensure User is persisted
+        user = entityManager.persistAndFlush(user); 
 
         UserNotification notification = new UserNotification();
         notification.setUserId(user.getId());
         notification.setMessage("Test notification");
         notification.setNotificationType(EventType.TASK_COMMENT_ADDED);
 
-        // Act
+        
         UserNotification persistedNotification = entityManager.persistFlushFind(notification);
 
-        // Assert
+        
         assertNotNull(persistedNotification.getCreatedAt(), "CreatedAt should be set after persistence");
         assertEquals(user.getId(), persistedNotification.getUserId(), "User ID should match");
     }
 
     @Test
     void testUser_UniqueConstraints_ShouldPreventDuplicates() {
-        // Arrange
+        
         User user1 = new User();
         user1.setKeycloakSubjectId("keycloak-123");
         user1.setEmail("test1@example.com");
         user1.setUsername("user1");
-        entityManager.persistAndFlush(user1); // Ensure first user is persisted
+        entityManager.persistAndFlush(user1); 
 
         User user2 = new User();
-        user2.setKeycloakSubjectId("keycloak-123"); // Duplicate keycloakSubjectId
+        user2.setKeycloakSubjectId("keycloak-123"); 
         user2.setEmail("test2@example.com");
         user2.setUsername("user2");
 
-        // Act & Assert
+        
         assertThrows(org.hibernate.exception.ConstraintViolationException.class, () -> {
             entityManager.persistAndFlush(user2);
         }, "Should throw exception due to duplicate keycloakSubjectId");
     }
 
-    // --- UserNotification Entity Tests ---
+    
     @Test
     void testUserNotification_ValidEntity_ShouldPassValidation() {
         UserNotification notification = new UserNotification();
@@ -130,7 +130,7 @@ public class EntityValidationAndPersistenceTest {
         Map<String, Object> metadata = new HashMap<>();
         metadata.put("taskId", 1L);
         notification.setMetadata(metadata);
-        notification.setMessage(null); // Explicitly set to null
+        notification.setMessage(null); 
 
         Set<ConstraintViolation<UserNotification>> violations = validator.validate(notification);
         assertEquals(1, violations.size());
@@ -140,7 +140,7 @@ public class EntityValidationAndPersistenceTest {
 
 
 
-    // --- UserTask Entity Tests ---
+    
     @Test
     void testUserTask_ValidEntity_ShouldPassValidation() {
         User user = new User();

@@ -35,15 +35,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(MockitoExtension.class)
-@WebMvcTest(controllers = TaskController.class, // Re-add the controller here!
+@WebMvcTest(controllers = TaskController.class, 
         excludeAutoConfiguration = {
                 DataSourceAutoConfiguration.class,
                 DataSourceTransactionManagerAutoConfiguration.class,
                 HibernateJpaAutoConfiguration.class,
                 JpaRepositoriesAutoConfiguration.class,
-//                JpaAuditingAutoConfiguration.class
+
         })
-// 3. Explicitly import ONLY the TestConfiguration containing mocks + controller bean
+
 @Import(TaskControllerTest.TestConfig.class)
 class TaskControllerTest {
 
@@ -64,7 +64,7 @@ class TaskControllerTest {
     private TaskHistoryDto taskHistoryDto;
 
 
-    // Configuration to provide mocked beans to the controller
+    
     @TestConfiguration
     static class TestConfig {
 
@@ -95,7 +95,7 @@ class TaskControllerTest {
         taskDto.setTitle("Test Task");
         taskDto.setStatus(Status.TODO);
         taskDto.setCreatorId(3L);
-        // Fix: Use Map<Long, String> for assignedUsers
+        
         Map<Long, String> assignedUsers = new HashMap<>();
         assignedUsers.put(3L, "abdelrahman");
         assignedUsers.put(21L, "developer");
@@ -114,10 +114,10 @@ class TaskControllerTest {
 
     @Test
     void createTask_Success_ReturnsCreated() throws Exception {
-        // Arrange
+        
         doNothing().when(iTaskService).createNewTask(any(TaskDto.class));
 
-        // Act & Assert
+        
         mockMvc.perform(post("/api/tasks/create")
                         .header("X-User-DatabaseId", "3")
                         .header("X-User-Username", "abdelrahman")
@@ -132,7 +132,7 @@ class TaskControllerTest {
 
     @Test
     void createTask_MissingHeaders_ReturnsBadRequest() throws Exception {
-        // Act & Assert
+        
         mockMvc.perform(post("/api/tasks/create")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(taskDto)))
@@ -143,10 +143,10 @@ class TaskControllerTest {
 
     @Test
     void createTask_InvalidTaskDto_ReturnsBadRequest() throws Exception {
-        // Arrange
-        TaskDto invalidTaskDto = new TaskDto(); // Missing required fields
+        
+        TaskDto invalidTaskDto = new TaskDto(); 
 
-        // Act & Assert
+        
         mockMvc.perform(post("/api/tasks/create")
                         .header("X-User-DatabaseId", "3")
                         .header("X-User-Username", "abdelrahman")
@@ -159,10 +159,10 @@ class TaskControllerTest {
 
     @Test
     void fetchTask_Success_ReturnsTaskDto() throws Exception {
-        // Arrange
+        
         when(iTaskService.fetchTask(1L)).thenReturn(taskDto);
 
-        // Act & Assert
+        
         mockMvc.perform(get("/api/tasks/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.title").value("Test Task"))
@@ -173,7 +173,7 @@ class TaskControllerTest {
 
     @Test
     void fetchTask_InvalidId_ReturnsBadRequest() throws Exception {
-        // Act & Assert
+        
         mockMvc.perform(get("/api/tasks/0"))
                 .andExpect(status().isBadRequest());
 
@@ -182,10 +182,10 @@ class TaskControllerTest {
 
     @Test
     void fetchTaskComments_Success_ReturnsCommentList() throws Exception {
-        // Arrange
+        
         when(iTaskService.fetchTaskComments(1L)).thenReturn(List.of(taskCommentDto));
 
-        // Act & Assert
+        
         mockMvc.perform(get("/api/tasks/1/comments"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].content").value("Test Comment"));
@@ -195,10 +195,10 @@ class TaskControllerTest {
 
     @Test
     void fetchTaskHistory_Success_ReturnsHistoryList() throws Exception {
-        // Arrange
+        
         when(iTaskHistoryService.fetchAllChangesToTask(1L)).thenReturn(List.of(taskHistoryDto));
 
-        // Act & Assert
+        
         mockMvc.perform(get("/api/tasks/1/history"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].taskId").value(1));
@@ -208,10 +208,10 @@ class TaskControllerTest {
 
     @Test
     void addDependency_Success_ReturnsCreated() throws Exception {
-        // Arrange
+        
         doNothing().when(iTaskService).addTaskDependency(1L, 2L);
 
-        // Act & Assert
+        
         mockMvc.perform(post("/api/tasks/1/dependencies")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("2"))
@@ -224,7 +224,7 @@ class TaskControllerTest {
 
     @Test
     void addDependency_NullDependsOnTaskId_ReturnsBadRequest() throws Exception {
-        // Act & Assert
+        
         mockMvc.perform(post("/api/tasks/1/dependencies")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(""))
@@ -235,10 +235,10 @@ class TaskControllerTest {
 
     @Test
     void fetchTaskDependencies_Success_ReturnsTaskList() throws Exception {
-        // Arrange
+        
         when(iTaskService.fetchTaskDependencies(1L)).thenReturn(List.of(taskDto));
 
-        // Act & Assert
+        
         mockMvc.perform(get("/api/tasks/1/dependencies"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].title").value("Test Task"));
@@ -248,10 +248,10 @@ class TaskControllerTest {
 
     @Test
     void fetchDependentTasks_Success_ReturnsTaskList() throws Exception {
-        // Arrange
+        
         when(iTaskService.fetchDependentTasks(1L)).thenReturn(List.of(taskDto));
 
-        // Act & Assert
+        
         mockMvc.perform(get("/api/tasks/1/dependent-tasks"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].title").value("Test Task"));
@@ -261,10 +261,10 @@ class TaskControllerTest {
 
     @Test
     void removeDependency_Success_ReturnsOk() throws Exception {
-        // Arrange
+        
         doNothing().when(iTaskService).removeTaskDependency(1L, 2L);
 
-        // Act & Assert
+        
         mockMvc.perform(delete("/api/tasks/1/dependencies/2"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.statusCode").value("200"))
@@ -275,10 +275,10 @@ class TaskControllerTest {
 
     @Test
     void updateTask_Success_ReturnsOk() throws Exception {
-        // Arrange
+        
         doNothing().when(iTaskService).updateTask(any(TaskDto.class));
 
-        // Act & Assert
+        
         mockMvc.perform(put("/api/tasks/update/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(taskDto)))
@@ -291,10 +291,10 @@ class TaskControllerTest {
 
     @Test
     void deleteTask_Success_ReturnsOk() throws Exception {
-        // Arrange
+        
         doNothing().when(iTaskService).deleteTask(1L);
 
-        // Act & Assert
+        
         mockMvc.perform(delete("/api/tasks/delete/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.statusCode").value("200"))

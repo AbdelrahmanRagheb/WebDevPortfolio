@@ -77,10 +77,10 @@ class UserControllerTest {
 
     @Test
     void createNewUser_Success_ReturnsCreated() throws Exception {
-        // Arrange
+        
         when(iUserService.createNewUser(any(UserDto.class))).thenReturn(1L);
 
-        // Act & Assert
+        
         mockMvc.perform(post("/api/users/signup")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(userDto)))
@@ -88,7 +88,7 @@ class UserControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").value(1L));
 
-        // Verify service interaction
+        
         verify(iUserService, times(1)).createNewUser(argThat(dto ->
                 dto.getKeycloakSubjectId().equals("keycloak-123") &&
                 dto.getEmail().equals("test@example.com") &&
@@ -98,27 +98,27 @@ class UserControllerTest {
 
     @Test
     void createNewUser_InvalidDto_ReturnsBadRequest() throws Exception {
-        // Arrange
+        
         UserDto invalidDto = new UserDto();
-        // Missing keycloakSubjectId, email, username (assumed @NotNull or @NotBlank in UserDto)
+        
 
-        // Act & Assert
+        
         mockMvc.perform(post("/api/users/signup")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(invalidDto)))
                 .andExpect(status().isBadRequest());
 
-        // Verify service is not called
+        
         verify(iUserService, never()).createNewUser(any());
     }
 
     @Test
     void getUserIdByKeycloakId_Success_ReturnsOk() throws Exception {
-        // Arrange
+        
         String keycloakId = "keycloak-123";
         when(iUserService.getUserIdByKeycloakId(eq(keycloakId))).thenReturn(1L);
 
-        // Act & Assert
+        
         mockMvc.perform(get("/api/users/keycloak/{keycloakId}/id", keycloakId))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -129,11 +129,11 @@ class UserControllerTest {
 
     @Test
     void getUserIdByKeycloakId_NotFound_ReturnsNotFound() throws Exception {
-        // Arrange
+        
         String keycloakId = "keycloak-999";
         when(iUserService.getUserIdByKeycloakId(eq(keycloakId))).thenReturn(null);
 
-        // Act & Assert
+        
         mockMvc.perform(get("/api/users/keycloak/{keycloakId}/id", keycloakId))
                 .andExpect(status().isNotFound());
 
@@ -142,10 +142,10 @@ class UserControllerTest {
 
     @Test
     void getUserIdByKeycloakId_EmptyKeycloakId_ReturnsBadRequest() throws Exception {
-        // Arrange
-        String keycloakId = ""; // Assuming validation on path variable
+        
+        String keycloakId = ""; 
 
-        // Act & Assert
+        
         mockMvc.perform(get("/api/users/keycloak/{keycloakId}/id", " "))
                 .andExpect(status().isBadRequest());
 
@@ -154,11 +154,11 @@ class UserControllerTest {
 
     @Test
     void checkUserExists_UserExists_ReturnsOk() throws Exception {
-        // Arrange
+        
         String keycloakId = "keycloak-123";
         when(iUserService.checkUserExists(eq(keycloakId))).thenReturn(true);
 
-        // Act & Assert
+        
         mockMvc.perform(get("/api/users/exists/{keycloakId}", keycloakId))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -170,11 +170,11 @@ class UserControllerTest {
 
     @Test
     void checkUserExists_UserDoesNotExist_ReturnsOk() throws Exception {
-        // Arrange
+        
         String keycloakId = "keycloak-999";
         when(iUserService.checkUserExists(eq(keycloakId))).thenReturn(false);
 
-        // Act & Assert
+        
         mockMvc.perform(get("/api/users/exists/{keycloakId}", keycloakId))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -194,11 +194,11 @@ class UserControllerTest {
 
     @Test
     void fetchUserDetails_Success_ReturnsOk() throws Exception {
-        // Arrange
+        
         String keycloakId = "keycloak-123";
         when(iUserService.getUserByKeycloakId(eq(keycloakId))).thenReturn(userDto);
 
-        // Act & Assert
+        
         mockMvc.perform(get("/api/users/fetch/{keycloakId}", keycloakId))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -211,11 +211,11 @@ class UserControllerTest {
 
     @Test
     void fetchUserDetails_NotFound_ReturnsNotFound() throws Exception {
-        // Arrange
+        
         String keycloakId = "keycloak-999";
         when(iUserService.getUserByKeycloakId(eq(keycloakId))).thenReturn(null);
 
-        // Act & Assert
+        
         mockMvc.perform(get("/api/users/fetch/{keycloakId}", keycloakId))
                 .andExpect(status().isNotFound());
 
@@ -224,7 +224,7 @@ class UserControllerTest {
 
     @Test
     void fetchUserDetails_EmptyKeycloakId_ReturnsBadRequest() throws Exception {
-        // Arrange
+        
         String keycloakId = " ";
         mockMvc.perform(get("/api/users/fetch/{keycloakId}", keycloakId))
                 .andExpect(status().isBadRequest());

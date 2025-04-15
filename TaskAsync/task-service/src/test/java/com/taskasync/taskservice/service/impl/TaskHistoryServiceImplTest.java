@@ -50,7 +50,7 @@ public class TaskHistoryServiceImplTest {
 
     @Test
     void testTrackTaskChange_Success() {
-        // Arrange
+        
         TaskHistory taskHistory = new TaskHistory();
         taskHistory.setTask(existingTask);
         taskHistory.setChangedByUserId(1L);
@@ -64,10 +64,10 @@ public class TaskHistoryServiceImplTest {
 
         when(taskHistoryRepository.save(any(TaskHistory.class))).thenReturn(taskHistory);
 
-        // Act
+        
         TaskHistoryDto result = taskHistoryService.trackTaskChange(existingTask, taskDto);
 
-        // Assert
+        
         assertNotNull(result);
         assertEquals(2, result.getChangeDetails().getChanges().size());
         verify(taskHistoryRepository, times(1)).save(any(TaskHistory.class));
@@ -75,60 +75,60 @@ public class TaskHistoryServiceImplTest {
 
     @Test
     void testTrackTaskChange_NoChanges() {
-        // Arrange: Set taskDto to have the same values as existingTask
+        
         taskDto.setTitle("Old Title");
         taskDto.setDescription("Old Description");
 
-        // Act
+        
         TaskHistoryDto result = taskHistoryService.trackTaskChange(existingTask, taskDto);
 
-        // Assert: No changes, so null is returned
+        
         assertNull(result);
         verify(taskHistoryRepository, never()).save(any(TaskHistory.class));
     }
 
     @Test
     void testTrackTaskChange_DataIntegrityViolation() {
-        // Arrange
+        
         when(taskHistoryRepository.save(any(TaskHistory.class)))
                 .thenThrow(new DataIntegrityViolationException("DB error"));
 
-        // Act & Assert
+        
         assertThrows(DataIntegrityViolationException.class, () -> taskHistoryService.trackTaskChange(existingTask, taskDto));
         verify(taskHistoryRepository, times(1)).save(any(TaskHistory.class));
     }
 
     @Test
     void testFetchAllChangesToTask_Success() {
-        // Arrange
+        
         TaskHistoryDto taskHistoryDto = new TaskHistoryDto();
         List<TaskHistoryDto> taskHistories = Collections.singletonList(taskHistoryDto);
         when(taskHistoryRepository.findByTaskId(anyLong())).thenReturn(taskHistories);
 
-        // Act
+        
         List<TaskHistoryDto> result = taskHistoryService.fetchAllChangesToTask(1L);
 
-        // Assert
+        
         assertEquals(1, result.size());
         verify(taskHistoryRepository, times(1)).findByTaskId(1L);
     }
 
     @Test
     void testFetchAllChangesToTask_NotFound() {
-        // Arrange
+        
         when(taskHistoryRepository.findByTaskId(anyLong())).thenReturn(Collections.emptyList());
 
-        // Act & Assert
+        
         assertThrows(ResourceNotFoundException.class, () -> taskHistoryService.fetchAllChangesToTask(1L));
         verify(taskHistoryRepository, times(1)).findByTaskId(1L);
     }
 
     @Test
     void testDeleteByTaskId() {
-        // Act
+        
         taskHistoryService.deleteByTaskId(1L);
 
-        // Assert
+        
         verify(taskHistoryRepository, times(1)).deleteByTaskId(1L);
     }
 }

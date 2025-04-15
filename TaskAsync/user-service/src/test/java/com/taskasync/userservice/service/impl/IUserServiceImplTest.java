@@ -42,9 +42,7 @@ public class IUserServiceImplTest {
     @InjectMocks
     private IUserServiceImpl userService;
 
-    /**
-     * Helper method to create a User entity.
-     */
+   
     private User createUser(String keycloakId) {
         User user = new User();
         user.setKeycloakSubjectId(keycloakId);
@@ -56,18 +54,18 @@ public class IUserServiceImplTest {
 
     @Test
     void testCreateNewUser_Success() {
-        // Arrange
+        
         UserDto userDto = new UserDto();
         User user = createUser(UUID.randomUUID().toString());
         when(userMapper.mapToUser(any(UserDto.class), any(User.class))).thenReturn(user);
         when(userMapper.mapToUserDto(any(User.class), any(UserDto.class))).thenReturn(userDto);
 
-        // Act
+        
         Long userId = userService.createNewUser(userDto);
         entityManager.flush();
         entityManager.clear();
 
-        // Assert
+        
         Optional<User> savedUser = userRepository.findById(userId);
         assertTrue(savedUser.isPresent());
         assertEquals(user.getKeycloakSubjectId(), savedUser.get().getKeycloakSubjectId());
@@ -75,62 +73,62 @@ public class IUserServiceImplTest {
 
     @Test
     void testCheckUserExists_True() {
-        // Arrange
+        
         String keycloakId = UUID.randomUUID().toString();
         User user = createUser(keycloakId);
         entityManager.persistAndFlush(user);
         entityManager.clear();
 
-        // Act
+        
         boolean exists = userService.checkUserExists(keycloakId);
 
-        // Assert
+        
         assertTrue(exists);
     }
 
     @Test
     void testCheckUserExists_False() {
-        // Arrange
+        
         String keycloakId = UUID.randomUUID().toString();
 
-        // Act
+        
         boolean exists = userService.checkUserExists(keycloakId);
 
-        // Assert
+        
         assertFalse(exists);
     }
 
     @Test
     void testGetUserIdByKeycloakId_Found() {
-        // Arrange
+        
         String keycloakId = UUID.randomUUID().toString();
         User user = createUser(keycloakId);
         entityManager.persistAndFlush(user);
         entityManager.clear();
 
-        // Act
+        
         Long userId = userService.getUserIdByKeycloakId(keycloakId);
 
-        // Assert
+        
         assertNotNull(userId);
         assertEquals(user.getId(), userId);
     }
 
     @Test
     void testGetUserIdByKeycloakId_NotFound() {
-        // Arrange
+        
         String keycloakId = UUID.randomUUID().toString();
 
-        // Act
+        
         Long userId = userService.getUserIdByKeycloakId(keycloakId);
 
-        // Assert
+        
         assertNull(userId);
     }
 
     @Test
     void testGetUserByKeycloakId_Found() {
-        // Arrange
+        
         String keycloakId = UUID.randomUUID().toString();
         User user = createUser(keycloakId);
         UserDto userDto = new UserDto();
@@ -138,23 +136,23 @@ public class IUserServiceImplTest {
         when(userMapper.mapToUserDto(any(User.class), any(UserDto.class))).thenReturn(userDto);
         entityManager.clear();
 
-        // Act
+        
         UserDto result = userService.getUserByKeycloakId(keycloakId);
 
-        // Assert
+        
         assertNotNull(result);
         verify(userMapper).mapToUserDto(eq(user), any(UserDto.class));
     }
 
     @Test
     void testGetUserByKeycloakId_NotFound() {
-        // Arrange
+        
         String keycloakId = UUID.randomUUID().toString();
 
-        // Act
+        
         UserDto result = userService.getUserByKeycloakId(keycloakId);
 
-        // Assert
+        
         assertNull(result);
         verify(userMapper, never()).mapToUserDto(any(User.class), any(UserDto.class));
     }

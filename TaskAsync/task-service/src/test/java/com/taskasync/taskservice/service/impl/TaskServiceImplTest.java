@@ -124,15 +124,15 @@ public class TaskServiceImplTest {
 
     @Test
     void testUpdateTask_Success() {
-        // Arrange: Only stub methods that will be called
+        
         when(taskRepository.findById(anyLong())).thenReturn(Optional.of(task));
         when(iTaskHistoryService.trackTaskChange(any(Task.class), any(TaskDto.class))).thenReturn(new TaskHistoryDto());
         when(taskRepository.save(any(Task.class))).thenReturn(task);
 
-        // Act
+        
         taskService.updateTask(taskDto);
 
-        // Assert
+        
         verify(taskRepository, times(1)).save(any(Task.class));
         verify(notificationProducerService, times(1)).notifyAssignedUsers(
                 eq(EventType.TASK_UPDATED), eq(task), eq(taskDto), any(TaskHistoryDto.class));
@@ -184,19 +184,19 @@ public class TaskServiceImplTest {
 
     @Test
     void testFetchTaskComments_Success() {
-        // Arrange: Create a TaskComment and set its Task field
+        
         TaskComment comment = new TaskComment();
         comment.setId(1L);
         comment.setContent("Test Comment");
-        comment.setTask(task); // Set the Task field to avoid NullPointerException
+        comment.setTask(task); 
         task.getComments().add(comment);
 
         when(taskRepository.findById(anyLong())).thenReturn(Optional.of(task));
 
-        // Act
+        
         List<TaskCommentDto> result = taskService.fetchTaskComments(1L);
 
-        // Assert
+        
         assertEquals(1, result.size());
         assertEquals("Test Comment", result.get(0).getContent());
     }

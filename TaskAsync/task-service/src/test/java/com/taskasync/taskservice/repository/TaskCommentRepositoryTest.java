@@ -27,30 +27,30 @@ public class TaskCommentRepositoryTest {
 
     @Test
     void testSaveAndFindById() {
-        // Arrange
+        
         Task task = new Task();
         task.setTitle("Test Task");
         task.setCreatorId(1L);
-        task.setCreatedAt(LocalDateTime.now()); // Required: created_at NOT NULL
-        task.setCategory(Category.WORK);   // Optional, but setting for completeness
-        task.setPriority(Priority.MEDIUM); // Required: priority NOT NULL
-        task.setStatus(Status.TODO);       // Required: status NOT NULL
+        task.setCreatedAt(LocalDateTime.now()); 
+        task.setCategory(Category.WORK);   
+        task.setPriority(Priority.MEDIUM); 
+        task.setStatus(Status.TODO);       
         HashMap<Long, String> assignedUsers = new HashMap<>();
-        assignedUsers.put(99L, "reviewer");     // Required: assigned_users NOT NULL and must be non-empty
+        assignedUsers.put(99L, "reviewer");     
         task.setAssignedUsers(assignedUsers);
         entityManager.persist(task);
 
         TaskComment comment = new TaskComment();
         comment.setTask(task);
         comment.setContent("Test Comment");
-        comment.setCommenterId(1L);             // Required: commenter_id NOT NULL
-        comment.setCreatedAt(LocalDateTime.now()); // Required: created_at NOT NULL
+        comment.setCommenterId(1L);             
+        comment.setCreatedAt(LocalDateTime.now()); 
 
-        // Act
+        
         TaskComment savedComment = taskCommentRepository.save(comment);
         Optional<TaskComment> foundComment = taskCommentRepository.findById(savedComment.getId());
 
-        // Assert
+        
         assertTrue(foundComment.isPresent());
         assertEquals("Test Comment", foundComment.get().getContent());
         assertEquals(task.getId(), foundComment.get().getTask().getId());
@@ -58,31 +58,31 @@ public class TaskCommentRepositoryTest {
 
     @Test
     void testDeleteById() {
-        // Arrange
+        
         Task task = new Task();
         task.setTitle("Test Task");
         task.setCreatorId(1L);
-        task.setCreatedAt(LocalDateTime.now()); // Required: created_at NOT NULL
-        task.setCategory(Category.WORK);   // Optional, but setting for completeness
-        task.setPriority(Priority.MEDIUM); // Required: priority NOT NULL
-        task.setStatus(Status.TODO);       // Required: status NOT NULL
+        task.setCreatedAt(LocalDateTime.now()); 
+        task.setCategory(Category.WORK);   
+        task.setPriority(Priority.MEDIUM); 
+        task.setStatus(Status.TODO);       
         HashMap<Long, String> assignedUsers = new HashMap<>();
-        assignedUsers.put(99L, "reviewer");     // Required: assigned_users NOT NULL and must be non-empty
+        assignedUsers.put(99L, "reviewer");     
         task.setAssignedUsers(assignedUsers);
         entityManager.persist(task);
 
         TaskComment comment = new TaskComment();
         comment.setTask(task);
         comment.setContent("Test Comment");
-        comment.setCommenterId(1L);             // Required: commenter_id NOT NULL
-        comment.setCreatedAt(LocalDateTime.now()); // Required: created_at NOT NULL
+        comment.setCommenterId(1L);             
+        comment.setCreatedAt(LocalDateTime.now()); 
         TaskComment savedComment = entityManager.persistAndFlush(comment);
 
-        // Act
+        
         taskCommentRepository.deleteById(savedComment.getId());
         Optional<TaskComment> foundComment = taskCommentRepository.findById(savedComment.getId());
 
-        // Assert
+        
         assertFalse(foundComment.isPresent());
     }
 }

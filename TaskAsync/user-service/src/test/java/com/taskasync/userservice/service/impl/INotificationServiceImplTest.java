@@ -62,7 +62,7 @@ public class INotificationServiceImplTest {
 
     @Test
     void testCreateTaskAssignmentNotification_Success() {
-        // Arrange
+        
         User user = createUser();
         Long taskId = 100L;
         String taskTitle = "Sample Task";
@@ -71,14 +71,14 @@ public class INotificationServiceImplTest {
         String message = "You've been assigned to task 'Sample Task'";
         EventType eventType = EventType.TASK_ROLE_ADDED;
 
-        // Act
+        
         notificationService.createTaskAssignmentNotification(
                 user.getId(), eventType, message, taskId, taskTitle, assignedById, assignedByName
         );
         entityManager.flush();
         entityManager.clear();
 
-        // Assert
+        
         List<UserNotification> notifications = userNotificationRepository.findByUserId(user.getId());
         assertEquals(1, notifications.size());
         UserNotification notification = notifications.get(0);
@@ -96,7 +96,7 @@ public class INotificationServiceImplTest {
 
     @Test
     void testCreateCommentNotification_Success() {
-        // Arrange
+        
         User user = createUser();
         Long taskId = 100L;
         String taskTitle = "Sample Task";
@@ -107,14 +107,14 @@ public class INotificationServiceImplTest {
         EventType eventType = EventType.TASK_COMMENT_ADDED;
         String expectedMessage = "Jane commented on task 'Sample Task': Great work!";
 
-        // Act
+        
         notificationService.createCommentNotification(
                 user.getId(), eventType, taskId, taskTitle, commentId, commentPreview, commenterId, commenterName
         );
         entityManager.flush();
         entityManager.clear();
 
-        // Assert
+        
         List<UserNotification> notifications = userNotificationRepository.findByUserId(user.getId());
         assertEquals(1, notifications.size());
         UserNotification notification = notifications.get(0);
@@ -133,7 +133,7 @@ public class INotificationServiceImplTest {
 
     @Test
     void testGetUserNotifications_ReturnsNotifications() {
-        // Arrange
+        
         User user = createUser();
         Map<String, Object> metadata1 = new HashMap<>();
         metadata1.put("task_id", 100L);
@@ -150,10 +150,10 @@ public class INotificationServiceImplTest {
         entityManager.flush();
         entityManager.clear();
 
-        // Act
+        
         List<UserNotification> notifications = notificationService.getUserNotifications(user.getId());
 
-        // Assert
+        
         assertEquals(2, notifications.size());
         assertTrue(notifications.stream().anyMatch(n -> n.getNotificationType() == EventType.TASK_CREATED));
         assertTrue(notifications.stream().anyMatch(n -> n.getNotificationType() == EventType.TASK_UPDATED));
@@ -161,21 +161,21 @@ public class INotificationServiceImplTest {
 
     @Test
     void testGetUserNotifications_NoNotifications() {
-        // Arrange
+        
         User user = createUser();
         entityManager.flush();
         entityManager.clear();
 
-        // Act
+        
         List<UserNotification> notifications = notificationService.getUserNotifications(user.getId());
 
-        // Assert
+        
         assertTrue(notifications.isEmpty());
     }
 
     @Test
     void testGetTaskNotifications_ReturnsNotifications() {
-        // Arrange
+        
         User user = createUser();
         Long taskId = 100L;
         Map<String, Object> metadata = new HashMap<>();
@@ -187,34 +187,34 @@ public class INotificationServiceImplTest {
         entityManager.flush();
         entityManager.clear();
 
-        // Act
+        
         List<UserNotification> notifications = userNotificationRepository.findByUserId(user.getId())
                 .stream()
                 .filter(n -> n.getMetadata().get("task_id") != null &&
                         taskId.longValue() == ((Number) n.getMetadata().get("task_id")).longValue())
                 .toList();
 
-        // Assert
+        
         assertEquals(1, notifications.size());
         assertEquals(taskId.longValue(), ((Number) notifications.get(0).getMetadata().get("task_id")).longValue());
     }
 
     @Test
     void testGetTaskNotifications_NoNotifications() {
-        // Arrange
+        
         User user = createUser();
         Long taskId = 100L;
         entityManager.flush();
         entityManager.clear();
 
-        // Act
+        
         List<UserNotification> notifications = userNotificationRepository.findByUserId(user.getId())
                 .stream()
                 .filter(n -> n.getMetadata().get("task_id") != null &&
                         taskId.longValue() == ((Number) n.getMetadata().get("task_id")).longValue())
                 .toList();
 
-        // Assert
+        
         assertTrue(notifications.isEmpty());
     }
 }

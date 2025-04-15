@@ -32,13 +32,13 @@ public class UserTaskRepositoryTest {
      * Helper method to create a UserTask with a persisted User.
      */
     private UserTask createUserTask(Long taskId) {
-        // Create and persist User
+        
         User user = new User();
         user.setKeycloakSubjectId(UUID.randomUUID().toString());
         user.setCreatedAt(LocalDateTime.now());
         entityManager.persistAndFlush(user);
 
-        // Create UserTask
+        
         UserTask userTask = new UserTask();
         userTask.setUser(user);
         userTask.setTaskId(taskId);
@@ -48,16 +48,16 @@ public class UserTaskRepositoryTest {
 
     @Test
     void testFindByUserIdAndTaskId_Exists() {
-        // Arrange
+        
         UserTask userTask = createUserTask(100L);
         Long userId = userTask.getUser().getId();
-        userTaskRepository.saveAndFlush(userTask); // Use repository to ensure consistency
+        userTaskRepository.saveAndFlush(userTask); 
         entityManager.clear();
 
-        // Act
+        
         Optional<UserTask> found = userTaskRepository.findByUserIdAndTaskId(userId, 100L);
 
-        // Assert
+        
         assertTrue(found.isPresent(), "UserTask should be found");
         assertEquals(userId, found.get().getUser().getId());
         assertEquals(100L, found.get().getTaskId());
@@ -65,69 +65,69 @@ public class UserTaskRepositoryTest {
 
     @Test
     void testFindByUserIdAndTaskId_NotExists() {
-        // Arrange
+        
         UserTask userTask = createUserTask(100L);
         Long userId = userTask.getUser().getId();
         userTaskRepository.saveAndFlush(userTask);
         entityManager.clear();
 
-        // Act
+        
         Optional<UserTask> found = userTaskRepository.findByUserIdAndTaskId(userId + 1, 100L);
 
-        // Assert
+        
         assertFalse(found.isPresent());
     }
 
     @Test
     void testDeleteByUserIdAndTaskId_Exists() {
-        // Arrange
+        
         UserTask userTask = createUserTask(100L);
         Long userId = userTask.getUser().getId();
         userTaskRepository.saveAndFlush(userTask);
         entityManager.clear();
 
-        // Act
+        
         userTaskRepository.deleteByUserIdAndTaskId(userId, 100L);
         entityManager.flush();
         entityManager.clear();
 
-        // Assert
+        
         Optional<UserTask> found = userTaskRepository.findByUserIdAndTaskId(userId, 100L);
         assertFalse(found.isPresent());
     }
 
     @Test
     void testDeleteByUserIdAndTaskId_NotExists() {
-        // Arrange
+        
         UserTask userTask = createUserTask(100L);
         Long userId = userTask.getUser().getId();
         userTaskRepository.saveAndFlush(userTask);
         entityManager.clear();
 
-        // Act
+        
         userTaskRepository.deleteByUserIdAndTaskId(userId + 1, 100L);
         entityManager.flush();
         entityManager.clear();
 
-        // Assert
+        
         Optional<UserTask> found = userTaskRepository.findByUserIdAndTaskId(userId, 100L);
         assertTrue(found.isPresent());
     }
 
     @Test
     void testSaveAndFindById() {
-        // Arrange
+        
         UserTask userTask = createUserTask(100L);
         Long userId = userTask.getUser().getId();
 
-        // Act
+        
         UserTask savedUserTask = userTaskRepository.save(userTask);
         entityManager.flush();
         entityManager.clear();
 
         Optional<UserTask> foundUserTask = userTaskRepository.findById(savedUserTask.getId());
 
-        // Assert
+        
         assertTrue(foundUserTask.isPresent());
         UserTask found = foundUserTask.get();
         assertNotNull(found.getId());
@@ -137,11 +137,11 @@ public class UserTaskRepositoryTest {
 
     @Test
     void testSave_ThrowsException_WhenRequiredFieldIsNull() {
-        // Arrange
+        
         UserTask userTask = new UserTask();
-        // Missing user, taskId, assignmentStatus
+        
 
-        // Act & Assert
+        
         assertThrows(Exception.class, () -> {
             userTaskRepository.save(userTask);
             entityManager.flush();
